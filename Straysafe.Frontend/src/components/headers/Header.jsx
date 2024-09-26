@@ -16,7 +16,12 @@ function Header() {
         </div>
         <div className="flex col-span-2 justify-center">
           <div className="text-center w-auto font-bold">
-            <Button default>Adopt a Pet</Button>
+            <Button
+              onClick={() => RedirectTo(ApplicationConstants.ROUTE_ADOPT_PET)}
+              default
+            >
+              Adopt a Pet
+            </Button>
           </div>
           <div className="text-center w-auto font-bold">
             <Button default>Lost Pets</Button>

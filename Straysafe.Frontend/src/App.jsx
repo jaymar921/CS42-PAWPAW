@@ -6,6 +6,9 @@ import SignUpStraverPage from "./pages/authentication/SignUpStraverPage";
 import { ApplicationConstants } from "./contants/ApplicationConstants";
 import SignUpOrganizationPage from "./pages/authentication/SignUpOrganizationPage";
 import SignUpOptionPage from "./pages/SignUpOptionPage";
+import PetAdoptionPage from "./pages/adopt_pet/PetAdoptionPage";
+import ViewPetProfilePage from "./pages/adopt_pet/ViewPetProfilePage";
+import AddPetProfile from "./pages/adopt_pet/AddPetProfile";
 
 function App() {
   return (
@@ -29,6 +32,18 @@ function App() {
             <Route
               path={ApplicationConstants.ROUTE_SIGNUP_AS}
               element={<SignUpOptionPage />}
+            />
+            <Route
+              path={ApplicationConstants.ROUTE_ADOPT_PET}
+              element={<PetAdoptionPage />}
+            />
+            <Route
+              path={ApplicationConstants.ROUTE_VIEW_PET_PROFILE("*")}
+              element={<ViewPetProfilePage />}
+            />
+            <Route
+              path={ApplicationConstants.ROUTE_ADD_PET_FOR_ADOPTION}
+              element={<AddPetProfile />}
             />
             <Route
               path="*"
