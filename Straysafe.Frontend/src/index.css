@@ -13,3 +13,7 @@
 .brand-orange{
   color: #FF6700;
 }
+
+.hidden{
+  display: none;
+}
