@@ -12,6 +12,7 @@ function SignUpOrganizationPage() {
   const [password, setPassword] = useState("");
   const [showPassword, setShowPassword] = useState(false);
   const [contactNumber, setContactNumber] = useState("");
+  const [address, setAddress] = useState("");
 
   function showPasswordCallback() {
     setShowPassword(!showPassword);
@@ -24,6 +25,7 @@ function SignUpOrganizationPage() {
       email,
       password,
       contactNumber,
+      address,
     });
   }
 
@@ -97,19 +99,22 @@ function SignUpOrganizationPage() {
               />
             </div>
             <div className="my-3">
-              <FileInput
+              <Input
                 containerClassname={"w-[330px]"}
                 type="number"
-                placeholder={"Contact Number"}
-                name="contactnum"
-                value={contactNumber}
-                set={setContactNumber}
+                placeholder={"Address"}
+                name="address"
+                value={address}
+                set={setAddress}
               />
+            </div>
+            <div className="my-3">
+              <FileInput containerClassname={"w-[330px]"} />
             </div>
 
             <div className="text-center mt-8">
               <Button className={"w-[150px] my-2"} onClick={SignUpSubmit}>
-                Sign In
+                Sign Up
               </Button>
               <p className="primary-1">
                 Already have an account?{" "}

@@ -4,6 +4,7 @@ import { ApplicationConstants } from "../../contants/ApplicationConstants";
 import Input from "../../components/formElements/Input";
 import Button from "../../components/buttons/Button";
 import { RedirectTo } from "../../components/utilities/PageUtils";
+import { LoginAccount } from "../../components/utilities/services/AuthenticationHandler";
 
 function LoginPage() {
   const [email, setEmail] = useState("");
@@ -17,6 +18,10 @@ function LoginPage() {
 
   const rememberMeCallback = () => {
     setRememberMe(!rememberMe);
+  };
+
+  const handleLogin = () => {
+    LoginAccount({ username: email, password });
   };
 
   return (
@@ -71,7 +76,9 @@ function LoginPage() {
           </div>
 
           <div className="text-center mt-8">
-            <Button className={"w-[150px] my-2"}>Sign In</Button>
+            <Button className={"w-[150px] my-2"} onClick={handleLogin}>
+              Sign In
+            </Button>
             <p className="primary-1">
               Don&apos;t have an account?{" "}
               <a

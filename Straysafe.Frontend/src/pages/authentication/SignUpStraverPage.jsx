@@ -3,6 +3,9 @@ import Header from "../../components/headers/Header";
 import Input from "../../components/formElements/Input";
 import Button from "../../components/buttons/Button";
 import { RedirectTo } from "../../components/utilities/PageUtils";
+import { UserData } from "../../components/utilities/models/UserData";
+import { RegisterStraver } from "../../components/utilities/services/AuthenticationHandler";
+import { ApplicationConstants } from "../../contants/ApplicationConstants";
 
 function SignUpStraverPage() {
   const [lastname, setLastname] = useState("");
@@ -11,19 +14,25 @@ function SignUpStraverPage() {
   const [password, setPassword] = useState("");
   const [showPassword, setShowPassword] = useState(false);
   const [contactNumber, setContactNumber] = useState("");
+  const [address, setAddress] = useState("");
 
   function showPasswordCallback() {
     setShowPassword(!showPassword);
   }
 
   function SignUpSubmit() {
-    console.log({
-      lastname,
-      firstname,
+    var userData = new UserData({
+      lastName: lastname,
+      firstName: firstname,
       email,
       password,
-      contactNumber,
+      contactNumber: contactNumber,
+      address,
     });
+
+    var result = RegisterStraver(userData);
+    alert(result);
+    RedirectTo(ApplicationConstants.ROUTE_LOGIN);
   }
 
   return (
@@ -95,10 +104,20 @@ function SignUpStraverPage() {
                 set={setContactNumber}
               />
             </div>
+            <div className="my-3">
+              <Input
+                containerClassname={"w-[340px]"}
+                type="text"
+                placeholder={"Address"}
+                name="address"
+                value={address}
+                set={setAddress}
+              />
+            </div>
 
             <div className="text-center mt-8">
               <Button className={"w-[150px] my-2"} onClick={SignUpSubmit}>
-                Sign In
+                Sign Up
               </Button>
               <p className="primary-1">
                 Already have an account?{" "}
