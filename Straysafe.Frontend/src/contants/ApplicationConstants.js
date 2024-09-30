@@ -3,12 +3,14 @@ import StraySafeLogo2 from "/logo/straysafe_logo_2.png";
 import LandingPageImage from "../assets/images/landing/landingimg.png";
 import SampleCardImg from "../assets/images/samples/catImg.png";
 import LandingPageImage_Adopt from "../assets/images/landing/adoptimage.png"
+import UserActivityCardImg from "../assets/images/admin/UserActivityCard.jfif";
 
 export const ApplicationConstants = {
     StraySafeLogo1,
     StraySafeLogo2,
     LandingPageImage,
     LandingPageImage_Adopt,
+    UserActivityCardImg,
     SampleCardImg,
     ROUTE_LOGIN: "login",
     ROUTE_LANDING: "/",

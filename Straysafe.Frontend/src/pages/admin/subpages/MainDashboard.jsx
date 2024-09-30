@@ -1,9 +1,10 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import Input from "../../../components/formElements/Input";
 import DashboardReportCard from "../../../components/cards/DashboardReportCard";
 import { Chart } from "chart.js/auto";
 
 function MainDashboard() {
+  const [reportsChart, setReportChart] = useState(null);
   useEffect(() => {
     (async function () {
       const data = [
@@ -16,20 +17,24 @@ function MainDashboard() {
         { year: 2016, count: 28 },
       ];
 
-      new Chart("graph-a", {
-        type: "bar",
-        data: {
-          labels: data.map((row) => row.year),
-          datasets: [
-            {
-              label: "Acquisitions by year",
-              data: data.map((row) => row.count),
+      if (!reportsChart) {
+        setReportChart(
+          new Chart("graph-a", {
+            type: "bar",
+            data: {
+              labels: data.map((row) => row.year),
+              datasets: [
+                {
+                  label: "Reported Strays per Month",
+                  data: data.map((row) => row.count),
+                },
+              ],
             },
-          ],
-        },
-      });
+          })
+        );
+      }
     })();
-  }, []);
+  }, [reportsChart]);
 
   return (
     <div>
