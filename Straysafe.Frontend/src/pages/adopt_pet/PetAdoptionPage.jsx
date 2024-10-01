@@ -5,6 +5,7 @@ import CardContainer from "../../components/containers/CardContainer";
 import AdoptPetCard from "../../components/cards/AdoptPetCard";
 import { RedirectTo } from "../../components/utilities/PageUtils";
 import { ApplicationConstants } from "../../contants/ApplicationConstants";
+import Button from "../../components/buttons/Button";
 
 function PetAdoptionPage() {
   return (
@@ -12,6 +13,16 @@ function PetAdoptionPage() {
       <Header />
       <PageContainer>
         <h1 className="text-[30px] primary-1 font-bold my-4">Adopt a Pet</h1>
+        <div className={`relative w-100 flex justify-end m-4`}>
+          <div>
+            <Button
+              className="fa-solid fa-plus w-[60px]"
+              onClick={() => {
+                RedirectTo(ApplicationConstants.ROUTE_ADD_PET_FOR_ADOPTION);
+              }}
+            />
+          </div>
+        </div>
         <CardContainer>
           <AdoptPetCard
             onClick={() => {
