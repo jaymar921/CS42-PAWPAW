@@ -19,6 +19,7 @@ export const ApplicationConstants = {
     ROUTE_SIGNUP_AS: "/sign-up-as",
     ROUTE_ADOPT_PET: "/adopt-pet",
     ROUTE_ADMIN_DASHBOARD: "/admin",
+    ROUTE_ANNOUNCEMENT: "/announcement",
     ROUTE_VIEW_PET_PROFILE: (id) => `/adopt-pet/profile/${id}`,
     ROUTE_ADD_PET_FOR_ADOPTION: "/adopt-pet/add",
     LANDING_PAGE_ABOUT_1: `

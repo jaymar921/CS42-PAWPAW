@@ -116,7 +116,10 @@ function SignUpOrganizationPage() {
               />
             </div>
             <div className="my-3">
-              <FileInput containerClassname={"w-[330px]"} />
+              <FileInput
+                containerClassname={"w-[330px]"}
+                placeholder={"Attach your Certificate of Accreditation"}
+              />
             </div>
 
             <div className="text-center mt-8">

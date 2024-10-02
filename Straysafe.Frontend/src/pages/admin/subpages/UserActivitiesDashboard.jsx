@@ -35,7 +35,7 @@ function UserActivitiesDashboard() {
             />
           </div>
         </div>
-        <div className="grid grid-cols-2">
+        <div className="grid grid-cols-2 mb-5">
           <DateRange
             className="col-span-1"
             inputClassname="w-[160px]"
