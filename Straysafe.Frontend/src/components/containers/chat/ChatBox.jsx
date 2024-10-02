@@ -34,7 +34,7 @@ function ChatBox({
               src={profilePhoto}
             />
           )}
-          <div className="h-fit p-2 rounded-full bg-gray-300">
+          <div className="h-fit p-2 rounded-xl bg-gray-300">
             <div>{message}</div>
           </div>
           {position === ChatPosition.Right && (

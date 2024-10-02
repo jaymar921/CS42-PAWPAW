@@ -61,7 +61,46 @@ function ChatContainer() {
                 new ChatData({
                   ID: 0,
                   ProfilePhoto: ApplicationConstants.SampleCardImg,
-                  Message: "Hello",
+                  Message:
+                    "Hello He wfm94 89f w9 4fmhw98 fmu98w 4uf9w u89f98w u98fu89w afmiuashmivfsh87ef 8he8fh e8fh7w8e h87mvwh87 vm87wer hm78vw78vh78 esf",
+                  Postition: ChatPosition.Left,
+                }),
+                new ChatData({
+                  ID: 0,
+                  ProfilePhoto: ApplicationConstants.SampleCardImg,
+                  Message: "Baligya ni?",
+                  Postition: ChatPosition.Left,
+                }),
+                new ChatData({
+                  ID: 0,
+                  ProfilePhoto: ApplicationConstants.StraySafeLogo1,
+                  Message: "Dili sir, for adoption ra",
+                  Postition: ChatPosition.Right,
+                }),
+                new ChatData({
+                  ID: 0,
+                  ProfilePhoto: ApplicationConstants.SampleCardImg,
+                  Message:
+                    "Hello He wfm94 89f w9 4fmhw98 fmu98w 4uf9w u89f98w u98fu89w afmiuashmivfsh87ef 8he8fh e8fh7w8e h87mvwh87 vm87wer hm78vw78vh78 esf",
+                  Postition: ChatPosition.Left,
+                }),
+                new ChatData({
+                  ID: 0,
+                  ProfilePhoto: ApplicationConstants.SampleCardImg,
+                  Message: "Baligya ni?",
+                  Postition: ChatPosition.Left,
+                }),
+                new ChatData({
+                  ID: 0,
+                  ProfilePhoto: ApplicationConstants.StraySafeLogo1,
+                  Message: "Dili sir, for adoption ra",
+                  Postition: ChatPosition.Right,
+                }),
+                new ChatData({
+                  ID: 0,
+                  ProfilePhoto: ApplicationConstants.SampleCardImg,
+                  Message:
+                    "Hello He wfm94 89f w9 4fmhw98 fmu98w 4uf9w u89f98w u98fu89w afmiuashmivfsh87ef 8he8fh e8fh7w8e h87mvwh87 vm87wer hm78vw78vh78 esf",
                   Postition: ChatPosition.Left,
                 }),
                 new ChatData({

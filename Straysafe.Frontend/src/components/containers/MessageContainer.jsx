@@ -12,7 +12,7 @@ import { ChatData } from "../utilities/models/chatUtility/ChatData";
  */
 function MessageContainer({ Chats = [] }) {
   return (
-    <div className="relative w-full h-full overflow-y-auto">
+    <div className="relative w-full h-[450px] overflow-y-auto">
       <div className="relative w-full h-fit bottom-0 top-auto">
         {Chats.map((chatData, index) => (
           <ChatBox
