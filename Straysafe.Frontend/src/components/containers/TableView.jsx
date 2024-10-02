@@ -6,12 +6,14 @@ function TableView({
   TableRows = [],
   OnClickActions = [],
   className = "w-100 my-8",
+  rowClassName = "odd:bg-gray-100 even:bg-white",
+  headerClassName = "",
 }) {
   return (
     <div className={`${className}`}>
       <table className="w-full table-auto text-center">
         <thead>
-          <tr>
+          <tr className={headerClassName}>
             {TableHeader.map((headerColumn, index) => {
               return <th key={`${index}${Math.random()}`}>{headerColumn}</th>;
             })}
@@ -21,7 +23,7 @@ function TableView({
         <tbody>
           {TableRows.map((rowColumn, index) => {
             return (
-              <tr key={index} className="odd:bg-gray-100 even:bg-white">
+              <tr key={index} className={rowClassName}>
                 {rowColumn.map((rowData, index) => {
                   return <td key={`${index}${Math.random()}`}>{rowData}</td>;
                 })}
