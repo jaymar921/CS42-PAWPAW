@@ -11,6 +11,7 @@ import ViewPetProfilePage from "./pages/adopt_pet/ViewPetProfilePage";
 import AddPetProfile from "./pages/adopt_pet/AddPetProfile";
 import AdminDashboard from "./pages/admin/AdminDashboard";
 import AnnouncementPage from "./pages/announcement/AnnouncementPage";
+import ChatPage from "./pages/ChatPage";
 
 function App() {
   return (
@@ -54,6 +55,10 @@ function App() {
             <Route
               path={ApplicationConstants.ROUTE_ANNOUNCEMENT}
               element={<AnnouncementPage />}
+            />
+            <Route
+              path={ApplicationConstants.ROUTE_CHAT}
+              element={<ChatPage />}
             />
             <Route
               path="*"
