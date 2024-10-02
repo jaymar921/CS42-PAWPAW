@@ -3,6 +3,7 @@ import Input from "../../../components/formElements/Input";
 import PageContainer from "../../../components/containers/PageContainer";
 import Button from "../../../components/buttons/Button";
 import VerifyAccountModal from "../../../components/modals/VerifyAccountModal";
+import TableView from "../../../components/containers/TableView";
 
 function UsersDashboard() {
   const [showVerifyAccountModal, setShowVerifyAccountModal] = useState(false);
@@ -42,62 +43,29 @@ function UsersDashboard() {
             Verify Accounts
           </Button>
         </div>
-        <div className="w-100 my-8">
-          <table className="w-full table-auto text-center">
-            <thead>
-              <tr>
-                <th>User Type</th>
-                <th>Name</th>
-                <th>Email</th>
-                <th>Contact Number</th>
-                <th>Address</th>
-                <th>Action</th>
-              </tr>
-            </thead>
-            <tbody>
-              <tr className="odd:bg-gray-100 even:bg-white">
-                <td>Strayver</td>
-                <td>Jay</td>
-                <td>jay@email.co</td>
-                <td>09123123456</td>
-                <td>Talisay</td>
-                <td>
-                  <Button icon="fa-solid fa-gear" default></Button>
-                </td>
-              </tr>
-              <tr className="odd:bg-gray-100 even:bg-white">
-                <td>Strayver</td>
-                <td>Jay</td>
-                <td>jay@email.co</td>
-                <td>09123123456</td>
-                <td>Talisay</td>
-                <td>
-                  <Button icon="fa-solid fa-gear" default></Button>
-                </td>
-              </tr>
-              <tr className="odd:bg-gray-100 even:bg-white">
-                <td>Strayver</td>
-                <td>Jay</td>
-                <td>jay@email.co</td>
-                <td>09123123456</td>
-                <td>Talisay</td>
-                <td>
-                  <Button icon="fa-solid fa-gear" default></Button>
-                </td>
-              </tr>
-              <tr className="odd:bg-gray-100 even:bg-white">
-                <td>Strayver</td>
-                <td>Jay</td>
-                <td>jay@email.co</td>
-                <td>09123123456</td>
-                <td>Talisay</td>
-                <td>
-                  <Button icon="fa-solid fa-gear" default></Button>
-                </td>
-              </tr>
-            </tbody>
-          </table>
-        </div>
+        <TableView
+          TableHeader={[
+            "User Type",
+            "Name",
+            "Email",
+            "Contact Number",
+            "Address",
+          ]}
+          TableRows={[
+            [
+              "Strayver",
+              "Jay",
+              "Jay@email.company",
+              "09123123456",
+              "Talisay City",
+            ],
+          ]}
+          OnClickActions={[
+            () => {
+              alert("Hello Jay");
+            },
+          ]}
+        />
       </PageContainer>
     </div>
   );
