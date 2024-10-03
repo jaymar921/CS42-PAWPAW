@@ -1,5 +1,8 @@
 import React from "react";
-import { ApplicationConstants } from "../../contants/ApplicationConstants";
+import {
+  ApplicationConstants,
+  AuthConstants,
+} from "../../contants/ApplicationConstants";
 import Button from "../buttons/Button";
 import { RedirectTo } from "../utilities/PageUtils";
 import {
@@ -8,6 +11,7 @@ import {
 } from "../utilities/services/AuthenticationHandler";
 
 function Header() {
+  const loggedInAccount = GetProfileInformation();
   return (
     <div className="p-4 h-[80px] items-center">
       <div className="grid grid-cols-4">
@@ -26,15 +30,34 @@ function Header() {
               Adopt a Pet
             </Button>
           </div>
-          <div className="text-center w-auto font-bold hidden sm:block">
-            <Button default>Lost Pets</Button>
-          </div>
-          <div className="text-center w-auto font-bold hidden sm:block">
-            <Button default>Found Pets</Button>
-          </div>
-          <div className="text-center w-auto mx-4">
-            <Button>Donate</Button>
-          </div>
+          {loggedInAccount &&
+            loggedInAccount.Role === AuthConstants.ROLE_ORGANIZATION && (
+              <>
+                <div className="text-center w-auto font-bold hidden sm:block">
+                  <Button default>Announcement</Button>
+                </div>
+                <div className="text-center w-auto font-bold hidden sm:block">
+                  <Button default>Chats</Button>
+                </div>
+                <div className="text-center w-auto font-bold hidden sm:block">
+                  <Button default>Reports</Button>
+                </div>
+              </>
+            )}
+          {loggedInAccount?.Role !== AuthConstants.ROLE_ORGANIZATION && (
+            <>
+              <div className="text-center w-auto font-bold hidden sm:block">
+                <Button default>Lost Pets</Button>
+              </div>
+              <div className="text-center w-auto font-bold hidden sm:block">
+                <Button default>Found Pets</Button>
+              </div>
+              <div className="text-center w-auto mx-4">
+                <Button>Donate</Button>
+              </div>
+            </>
+          )}
+
           <div className="text-center w-auto">
             <Button icon="fa-solid fa-magnifying-glass" default></Button>
           </div>
