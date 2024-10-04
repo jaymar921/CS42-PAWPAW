@@ -5,6 +5,9 @@ function TableView({
   TableHeader = [],
   TableRows = [],
   OnClickActions = [],
+  actionClassName = "",
+  actionIcon = "fa-solid fa-gear",
+  actionChildren = "",
   className = "w-100 my-8",
   rowClassName = "odd:bg-gray-100 even:bg-white",
   headerClassName = "",
@@ -30,12 +33,15 @@ function TableView({
                 {OnClickActions && (
                   <td>
                     <Button
-                      icon="fa-solid fa-gear"
+                      icon={actionIcon}
+                      className={actionClassName}
                       default
                       onClick={() => {
                         if (OnClickActions[index]) OnClickActions[index]();
                       }}
-                    ></Button>
+                    >
+                      {actionChildren}
+                    </Button>
                   </td>
                 )}
               </tr>
