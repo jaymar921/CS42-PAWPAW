@@ -106,7 +106,7 @@ namespace Straysafe.Backend.Controllers
                 });
             }
             
-            return Unauthorized(new { Message = "Invalid Credentials"});
+            return Unauthorized(new { Message = "Invalid Credentials", Data = false});
         }
     }
 }
