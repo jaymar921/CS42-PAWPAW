@@ -16,29 +16,31 @@ export const DisplayName = ({msg_before = "", msg_after = ""}) => {
     return `${msg_before} ${GetProfileInformation().FirstName} ${msg_after}`;
 }
 
-export const LoginAccount = ({username, password}) => {
+export const LoginAccount = async ({username, password}) => {
     // initialize repository
     var accountRespository = new AccountRepository();
 
     // retrieve account
-    const foundAccount = accountRespository.GetSingleAccount((account) => account.Email.toLowerCase() === username.toLowerCase() && account.Password === password);
+    const loginResponse = await accountRespository.Login(username, password);
 
-    if(foundAccount){
-        // handle locked account
-        if(foundAccount.Locked && foundAccount.Role === AuthConstants.ROLE_ORGANIZATION){
+    // handle data
+    if(loginResponse.data){
+        const foundAccount = loginResponse.data;
+
+        if(foundAccount.locked && foundAccount.role === AuthConstants.ROLE_ORGANIZATION){
             alert("You're account is locked and under review by admins");
             return;
         }
         // hide some information in the view
         const minifiedAccount = {
-            Email: foundAccount.Email,
-            FirstName: foundAccount.FirstName,
-            LastName: foundAccount.LastName,
-            Role: foundAccount.Role
+            Email: foundAccount.email,
+            FirstName: foundAccount.firstName,
+            LastName: foundAccount.lastName,
+            Role: foundAccount.role
         }
         SaveLocalData("loggedInAccount", minifiedAccount);
 
-        if(foundAccount.Role === AuthConstants.ROLE_ADMIN) {
+        if(foundAccount.role === AuthConstants.ROLE_ADMIN) {
             RedirectTo(ApplicationConstants.ROUTE_ADMIN_DASHBOARD);
             return;
         }

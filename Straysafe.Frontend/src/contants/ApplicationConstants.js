@@ -39,3 +39,11 @@ export const AuthConstants = {
     ROLE_ORGANIZATION: "Organization",
     ROLE_ADMIN: "Admin"
 }
+
+const APIUrl = "http://localhost:5077";
+
+export const API_LINKS = {
+    LOGIN_URL: APIUrl + "/user/login",
+    REGISTER_URL: APIUrl + "/user/register",
+    GET_ALL: APIUrl + "/user/getall"
+}
