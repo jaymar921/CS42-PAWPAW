@@ -2,6 +2,7 @@
 using Straysafe.Backend.Common.DAL.Models;
 using Straysafe.Backend.Common.DTO;
 using Straysafe.Backend.Common.DTO.Auth;
+using Straysafe.Backend.Helper;
 using Straysafe.Backend.Services.Repositories;
 
 namespace Straysafe.Backend.Controllers
@@ -16,6 +17,8 @@ namespace Straysafe.Backend.Controllers
         [HttpPost("Register")]
         public async Task<IActionResult> AddUser([FromBody] User user)
         {
+            // Hash the password
+            user.Password = Hasher.HashSHA512(user.Password);
             bool result = await _repository.AddAsync(user);
 
             if (result) return Ok(new { Message = "User has been Registered"});
@@ -48,7 +51,7 @@ namespace Straysafe.Backend.Controllers
                 user.FirstName = updatedUser.FirstName;
                 user.LastName = updatedUser.LastName;
                 user.Email = updatedUser.Email;
-                user.Password = updatedUser.Password;
+                user.Password = Hasher.HashSHA512(updatedUser.Password);
                 user.ContactNumber = updatedUser.ContactNumber;
                 user.Address = updatedUser.Address;
                 user.Role = updatedUser.Role;
@@ -84,7 +87,7 @@ namespace Straysafe.Backend.Controllers
         public IActionResult Login([FromBody] UserCredential credential)
         {
             var user = _repository.GetAll().FirstOrDefault(u => 
-            u.Email.ToLower().Equals(credential.Email.ToLower()) && u.Password.Equals(credential.Password));
+            u.Email.ToLower().Equals(credential.Email.ToLower()) && u.Password.Equals(Hasher.HashSHA512(credential.Password)));
 
             
             if(user != null)
