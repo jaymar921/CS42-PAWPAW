@@ -1,4 +1,9 @@
 
+using Microsoft.EntityFrameworkCore;
+using Straysafe.Backend.Common.DAL.Models;
+using Straysafe.Backend.Data;
+using Straysafe.Backend.Services.Repositories;
+
 namespace Straysafe.Backend
 {
     public class Program
@@ -13,6 +18,10 @@ namespace Straysafe.Backend
             // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
             builder.Services.AddEndpointsApiExplorer();
             builder.Services.AddSwaggerGen();
+
+            builder.Services.AddDbContext<DatabaseContext>( options => options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection")));
+
+            builder.Services.AddScoped<IRepository<User>, UserRepository>();
 
             var app = builder.Build();
 
