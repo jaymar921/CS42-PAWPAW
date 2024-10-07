@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using Microsoft.IdentityModel.Tokens;
 using Straysafe.Backend.Common.DAL.Models;
 using Straysafe.Backend.Common.DTO;
 using Straysafe.Backend.Common.DTO.Auth;
@@ -21,8 +22,8 @@ namespace Straysafe.Backend.Controllers
             user.Password = Hasher.HashSHA512(user.Password);
             bool result = await _repository.AddAsync(user);
 
-            if (result) return Ok(new { Message = "User has been Registered"});
-            return BadRequest(new { Message = "Failed to Register User" });
+            if (result) return Ok(new { Message = "User has been Registered", Success = result});
+            return BadRequest(new { Message = "Failed to Register User", Success = result });
         }
 
         [HttpGet("GetAll")]
@@ -48,13 +49,19 @@ namespace Straysafe.Backend.Controllers
 
             if (user != null)
             {
-                user.FirstName = updatedUser.FirstName;
-                user.LastName = updatedUser.LastName;
-                user.Email = updatedUser.Email;
-                user.Password = Hasher.HashSHA512(updatedUser.Password);
-                user.ContactNumber = updatedUser.ContactNumber;
-                user.Address = updatedUser.Address;
-                user.Role = updatedUser.Role;
+                if(!string.IsNullOrEmpty(updatedUser.FirstName))
+                    user.FirstName = updatedUser.FirstName;
+                if (!string.IsNullOrEmpty(updatedUser.LastName))
+                    user.LastName = updatedUser.LastName;
+                if (!string.IsNullOrEmpty(updatedUser.Email))
+                    user.Email = updatedUser.Email;
+                if (!string.IsNullOrEmpty(updatedUser.Password))
+                    user.Password = Hasher.HashSHA512(updatedUser.Password);
+                if (!string.IsNullOrEmpty(updatedUser.ContactNumber))
+                    user.ContactNumber = updatedUser.ContactNumber;
+                if (!string.IsNullOrEmpty(updatedUser.Address))
+                    user.Address = updatedUser.Address;
+                // Role is onetime, cannot be changed
                 user.Locked = updatedUser.Locked;
 
                 bool result = await _repository.UpdateAsync(user);
@@ -74,13 +81,14 @@ namespace Straysafe.Backend.Controllers
                             Address = user.Address,
                             Role = user.Role,
                             Locked = user.Locked,
-                        }
+                        },
+                        Success = result
                     });
                 }
 
             }
 
-            return BadRequest(new { Message = "Failed to update user" });
+            return BadRequest(new { Message = "Failed to update user", Success = false });
         }
 
         [HttpPost("Login")]

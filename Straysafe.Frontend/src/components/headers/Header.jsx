@@ -31,7 +31,7 @@ function Header() {
             </Button>
           </div>
           {loggedInAccount &&
-            loggedInAccount.Role === AuthConstants.ROLE_ORGANIZATION && (
+            loggedInAccount.role === AuthConstants.ROLE_ORGANIZATION && (
               <>
                 <div className="text-center w-auto font-bold hidden sm:block">
                   <Button default>Announcement</Button>
@@ -44,7 +44,7 @@ function Header() {
                 </div>
               </>
             )}
-          {loggedInAccount?.Role !== AuthConstants.ROLE_ORGANIZATION && (
+          {loggedInAccount?.role !== AuthConstants.ROLE_ORGANIZATION && (
             <>
               <div className="text-center w-auto font-bold hidden sm:block">
                 <Button default>Lost Pets</Button>

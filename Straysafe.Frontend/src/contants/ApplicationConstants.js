@@ -43,7 +43,9 @@ export const AuthConstants = {
 const APIUrl = "http://localhost:5077";
 
 export const API_LINKS = {
-    LOGIN_URL: APIUrl + "/user/login",
-    REGISTER_URL: APIUrl + "/user/register",
-    GET_ALL: APIUrl + "/user/getall"
+    USER_LOGIN_URL: APIUrl + "/user/login",
+    USER_REGISTER_URL: APIUrl + "/user/register",
+    USER_GET_ALL: APIUrl + "/user/getall",
+    USER_DELETE: APIUrl + "/user/delete",
+    USER_UPDATE: APIUrl + "/user/update"
 }

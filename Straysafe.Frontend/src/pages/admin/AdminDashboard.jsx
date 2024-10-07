@@ -8,6 +8,12 @@ import ReportsDashboard from "./subpages/ReportsDashboard";
 import UsersDashboard from "./subpages/UsersDashboard";
 import DonationsDashboard from "./subpages/DonationsDashboard";
 import NotificationsDashboard from "./subpages/NotificationsDashboard";
+import { GetProfileInformation } from "../../components/utilities/services/AuthenticationHandler";
+import {
+  ApplicationConstants,
+  AuthConstants,
+} from "../../contants/ApplicationConstants";
+import { RedirectTo } from "../../components/utilities/PageUtils";
 
 function DashboardItem({ active }) {
   if (active === "User Activities") {
@@ -28,8 +34,14 @@ function DashboardItem({ active }) {
 }
 function AdminDashboard() {
   const [activeDashboard, setActiveDashboard] = useState("Home");
+  const [showDashboard, setShowDashboard] = useState(false);
 
-  useEffect(() => {}, [activeDashboard]);
+  useEffect(() => {
+    const loggedInUser = GetProfileInformation();
+    if (!loggedInUser || loggedInUser.role !== AuthConstants.ROLE_ADMIN)
+      RedirectTo(ApplicationConstants.ROUTE_LANDING);
+    setTimeout(() => setShowDashboard(true), 500);
+  }, [activeDashboard]);
   return (
     <div>
       <AdminSidebarNavigation
@@ -37,7 +49,11 @@ function AdminDashboard() {
         activeDashboard={activeDashboard}
       />
       <div className="absolute w-auto right-0 sm:left-64 left-0">
-        <PageContainer>
+        <PageContainer
+          className={`${
+            showDashboard ? "opacity-100" : "opacity-0"
+          } transition-all duration-300`}
+        >
           <DashboardItem active={activeDashboard} />
         </PageContainer>
       </div>

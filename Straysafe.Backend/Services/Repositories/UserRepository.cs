@@ -13,6 +13,10 @@ namespace Straysafe.Backend.Services.Repositories
         {
             try
             {
+                // avoid duplicate emails
+                var existingData = GetAll().FirstOrDefault(x => x.Email == entity.Email);
+                if (existingData != null) return false;
+
                 entity.Id = Guid.NewGuid();
                 await _databaseContext.Users.AddAsync(entity);
                 await _databaseContext.SaveChangesAsync();

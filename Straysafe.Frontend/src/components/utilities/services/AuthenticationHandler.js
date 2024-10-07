@@ -13,7 +13,7 @@ export const GetProfileInformation = () => {
 }
 
 export const DisplayName = ({msg_before = "", msg_after = ""}) => {
-    return `${msg_before} ${GetProfileInformation().FirstName} ${msg_after}`;
+    return `${msg_before} ${GetProfileInformation().firstName} ${msg_after}`;
 }
 
 export const LoginAccount = async ({username, password}) => {
@@ -33,10 +33,10 @@ export const LoginAccount = async ({username, password}) => {
         }
         // hide some information in the view
         const minifiedAccount = {
-            Email: foundAccount.email,
-            FirstName: foundAccount.firstName,
-            LastName: foundAccount.lastName,
-            Role: foundAccount.role
+            email: foundAccount.email,
+            firstName: foundAccount.firstName,
+            lastName: foundAccount.lastName,
+            role: foundAccount.role
         }
         SaveLocalData("loggedInAccount", minifiedAccount);
 
@@ -59,16 +59,14 @@ export const LogoutAccount = () => {
 /**
  * 
  * @param {UserData} user 
- * @returns {string} msg
+ * @returns {Promise<string>} msg
  */
-export const RegisterStraver = (user) => {
+export const RegisterStraver = async (user) => {
     // initialize repository
     var accountRespository = new AccountRepository();
     var msg = "User has been registered";
 
-    // generate a random ID for new user
-    user.ID = Math.floor(Math.max(Math.random() * 99999, Math.random() * 10000));
-    var result = accountRespository.SaveAccount(user);
+    var result = await accountRespository.SaveAccount(user);
     
     if(!result)
         msg = "Failed to register user, a duplicate email has found";
@@ -79,18 +77,16 @@ export const RegisterStraver = (user) => {
 /**
  * 
  * @param {UserData} user 
- * @returns {string} msg
+ * @returns {Promise<string>} msg
  */
-export const RegisterOrganization = (user) => {
+export const RegisterOrganization = async (user) => {
     // initialize repository
     var accountRespository = new AccountRepository();
     var msg = "Your account is currently under review and will be verified by an admin shortly. You will receive a confirmation once the process is complete.";
 
-    // generate a random ID for new user
-    user.ID = Math.floor(Math.max(Math.random() * 99999, Math.random() * 10000));
-    user.Locked = true;
-    user.Role = AuthConstants.ROLE_ORGANIZATION;
-    var result = accountRespository.SaveAccount(user);
+    user.locked = true;
+    user.role = AuthConstants.ROLE_ORGANIZATION;
+    var result = await accountRespository.SaveAccount(user);
     
     if(!result)
         msg = "Failed to register user, a duplicate email has found";

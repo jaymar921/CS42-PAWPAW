@@ -1,15 +1,47 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import Input from "../../../components/formElements/Input";
 import PageContainer from "../../../components/containers/PageContainer";
 import Button from "../../../components/buttons/Button";
 import VerifyAccountModal from "../../../components/modals/VerifyAccountModal";
 import TableView from "../../../components/containers/TableView";
+import { AccountRepository } from "../../../components/utilities/services/repositories/AccountRepository";
+import { AuthConstants } from "../../../contants/ApplicationConstants";
 
 function UsersDashboard() {
   const [showVerifyAccountModal, setShowVerifyAccountModal] = useState(false);
+  const [userData, setUserData] = useState([]);
+  const [unverifiedOrganizations, setUnverifiedOrganizations] = useState([]);
+
+  useEffect(() => {
+    RefreshRows();
+  }, []);
 
   const showModal = () => {
     setShowVerifyAccountModal(!showVerifyAccountModal);
+  };
+
+  const RefreshRows = async () => {
+    const accountRepo = new AccountRepository();
+    const accounts = await accountRepo.GetAccounts();
+    const dataRow = [];
+
+    for (const account of accounts) {
+      dataRow.push([
+        account.role,
+        account.firstName + " " + account.lastName,
+        account.email,
+        account.contactNumber,
+        account.address,
+      ]);
+    }
+
+    setUnverifiedOrganizations(
+      accounts.filter(
+        (u) => u.role === AuthConstants.ROLE_ORGANIZATION && u.locked
+      )
+    );
+
+    setUserData(dataRow);
   };
 
   return (
@@ -17,6 +49,8 @@ function UsersDashboard() {
       <VerifyAccountModal
         showModal={showVerifyAccountModal}
         closeModal={showModal}
+        unverifiedOrganizations={unverifiedOrganizations}
+        refreshRows={RefreshRows}
       />
       <PageContainer
         className={`${
@@ -51,15 +85,7 @@ function UsersDashboard() {
             "Contact Number",
             "Address",
           ]}
-          TableRows={[
-            [
-              "Strayver",
-              "Jay",
-              "Jay@email.company",
-              "09123123456",
-              "Talisay City",
-            ],
-          ]}
+          TableRows={[...userData]}
           OnClickActions={[
             () => {
               alert("Hello Jay");
