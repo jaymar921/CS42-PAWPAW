@@ -32,6 +32,8 @@ namespace Straysafe.Backend
                 app.UseSwaggerUI();
             }
 
+            app.UseCors(options => options.SetIsOriginAllowed(x => _ = true).AllowAnyMethod().AllowCredentials().AllowAnyHeader());
+
             app.UseHttpsRedirection();
 
             app.UseAuthorization();
