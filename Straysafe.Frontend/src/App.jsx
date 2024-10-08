@@ -13,6 +13,7 @@ import AdminDashboard from "./pages/admin/AdminDashboard";
 import AnnouncementPage from "./pages/announcement/AnnouncementPage";
 import ChatPage from "./pages/ChatPage";
 import ReportsPage from "./pages/organization/ReportsPage";
+import ReportStrayPage from "./pages/report/ReportStrayPage";
 
 function App() {
   return (
@@ -64,6 +65,10 @@ function App() {
             <Route
               path={ApplicationConstants.ROUTE_ORG_REPORTS}
               element={<ReportsPage />}
+            />
+            <Route
+              path={ApplicationConstants.ROUTE_REPORT_STRAY}
+              element={<ReportStrayPage />}
             />
             <Route
               path="*"

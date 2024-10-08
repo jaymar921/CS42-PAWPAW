@@ -24,6 +24,8 @@ export const ApplicationConstants = {
     ROUTE_ORG_REPORTS: "/reports",
     ROUTE_VIEW_PET_PROFILE: (id) => `/adopt-pet/profile/${id}`,
     ROUTE_ADD_PET_FOR_ADOPTION: "/adopt-pet/add",
+    ROUTE_PROFILE: "/profile",
+    ROUTE_REPORT_STRAY: "/report_stray",
     LANDING_PAGE_ABOUT_1: `
         "StraySafe" is designed to address animal welfare by offering a
         comprehensive, community-based platform to streamline the processes
