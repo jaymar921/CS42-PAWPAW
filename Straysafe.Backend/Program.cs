@@ -22,6 +22,7 @@ namespace Straysafe.Backend
             builder.Services.AddDbContext<DatabaseContext>( options => options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection")));
 
             builder.Services.AddScoped<IRepository<User>, UserRepository>();
+            builder.Services.AddScoped<IRepository<Reports>, ReportRepository>();
 
             var app = builder.Build();
 
