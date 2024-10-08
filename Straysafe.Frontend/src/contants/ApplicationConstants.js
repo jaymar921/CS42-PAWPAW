@@ -49,5 +49,6 @@ export const API_LINKS = {
     USER_REGISTER_URL: APIUrl + "/user/register",
     USER_GET_ALL: APIUrl + "/user/getall",
     USER_DELETE: APIUrl + "/user/delete",
-    USER_UPDATE: APIUrl + "/user/update"
+    USER_UPDATE: APIUrl + "/user/update",
+    MEDIA_UPLOAD: APIUrl + "/media/upload"
 }

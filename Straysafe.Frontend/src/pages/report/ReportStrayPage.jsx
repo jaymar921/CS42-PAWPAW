@@ -7,6 +7,7 @@ import Input from "../../components/formElements/Input";
 import SelectInput from "../../components/formElements/SelectInput";
 import TextArea from "../../components/formElements/TextArea";
 import Button from "../../components/buttons/Button";
+import { API_LINKS } from "../../contants/ApplicationConstants";
 
 function ReportStrayPage() {
   const [file, setFile] = useState(null);
@@ -20,7 +21,21 @@ function ReportStrayPage() {
   const [address, setAddress] = useState("");
   const [remark, setRemark] = useState("");
 
-  const handleSubmit = () => {};
+  const handleSubmit = () => {
+    if (!file) {
+      alert("no file");
+      return;
+    }
+
+    let formData = new FormData();
+    formData.append("File", file, `REPORT_FILE.${file.name.split(".")[1]}`);
+    const config = {
+      method: "POST",
+      body: formData,
+    };
+
+    fetch(API_LINKS.MEDIA_UPLOAD, config);
+  };
 
   return (
     <PageContainer>
