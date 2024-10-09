@@ -53,43 +53,43 @@ const ViewPetProfilePage = () => {
           <div className="text-center flex justify-center">
             <div className="grid grid-cols-2 w-[400px] gap-4">
               <p className="col-span-1 text-right">Name:</p>
-              <p className="col-span-1 text-left">{petData.Name}</p>
+              <p className="col-span-1 text-left">{petData.name}</p>
             </div>
           </div>
           <div className="text-center flex justify-center">
             <div className="grid grid-cols-2 w-[400px] gap-4">
               <p className="col-span-1 text-right">AnimalType:</p>
-              <p className="col-span-1 text-left">{petData.AnimalType}</p>
+              <p className="col-span-1 text-left">{petData.animalType}</p>
             </div>
           </div>
           <div className="text-center flex justify-center">
             <div className="grid grid-cols-2 w-[400px] gap-4">
               <p className="col-span-1 text-right">Gender:</p>
-              <p className="col-span-1 text-left">{petData.Gender}</p>
+              <p className="col-span-1 text-left">{petData.gender}</p>
             </div>
           </div>
           <div className="text-center flex justify-center">
             <div className="grid grid-cols-2 w-[400px] gap-4">
               <p className="col-span-1 text-right">Weight:</p>
-              <p className="col-span-1 text-left">{petData.Weight} kg</p>
+              <p className="col-span-1 text-left">{petData.weight} kg</p>
             </div>
           </div>
           <div className="text-center flex justify-center">
             <div className="grid grid-cols-2 w-[400px] gap-4">
               <p className="col-span-1 text-right">Height:</p>
-              <p className="col-span-1 text-left">{petData.Height} in</p>
+              <p className="col-span-1 text-left">{petData.height} in</p>
             </div>
           </div>
           <div className="text-center flex justify-center">
             <div className="grid grid-cols-2 w-[400px] gap-4">
               <p className="col-span-1 text-right">Breed:</p>
-              <p className="col-span-1 text-left">{petData.Breed}</p>
+              <p className="col-span-1 text-left">{petData.breed}</p>
             </div>
           </div>
           <div className="text-center flex justify-center">
             <div className="grid grid-cols-2 w-[400px] gap-4">
               <p className="col-span-1 text-right">Remarks:</p>
-              <p className="col-span-1 text-left">{petData.Remarks}</p>
+              <p className="col-span-1 text-left">{petData.remarks}</p>
             </div>
           </div>
         </div>

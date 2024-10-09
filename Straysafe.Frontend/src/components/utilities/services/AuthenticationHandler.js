@@ -36,7 +36,8 @@ export const LoginAccount = async ({username, password}) => {
             email: foundAccount.email,
             firstName: foundAccount.firstName,
             lastName: foundAccount.lastName,
-            role: foundAccount.role
+            role: foundAccount.role,
+            id: foundAccount.id
         }
         SaveLocalData("loggedInAccount", minifiedAccount);
 

@@ -12,5 +12,8 @@
         public string Breed {  get; set; } = string.Empty;
         public string Address { get; set; } = string.Empty;
         public string Remarks { get; set; } = string.Empty;
+        public string Reporter { get; set; } = string.Empty;
+        public string Organization { get; set; } = string.Empty;
+        public string Status { get; set; }
     }
 }

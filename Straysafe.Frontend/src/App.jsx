@@ -14,6 +14,8 @@ import AnnouncementPage from "./pages/announcement/AnnouncementPage";
 import ChatPage from "./pages/ChatPage";
 import ReportsPage from "./pages/organization/ReportsPage";
 import ReportStrayPage from "./pages/report/ReportStrayPage";
+import ReportStrayHistory from "./pages/report/ReportStrayHistory";
+import ReportStrayInformation from "./pages/report/ReportStrayInformation";
 
 function App() {
   return (
@@ -69,6 +71,14 @@ function App() {
             <Route
               path={ApplicationConstants.ROUTE_REPORT_STRAY}
               element={<ReportStrayPage />}
+            />
+            <Route
+              path={ApplicationConstants.ROUTE_REPORT_STRAY_HISTORY}
+              element={<ReportStrayHistory />}
+            />
+            <Route
+              path={ApplicationConstants.ROUTE_REPORT_STRAY + "/:id"}
+              element={<ReportStrayInformation />}
             />
             <Route
               path="*"

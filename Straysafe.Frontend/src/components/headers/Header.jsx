@@ -127,7 +127,7 @@ function Header() {
               <Button
                 className="text-lg border-b-2 w-[100%] text-left"
                 onClick={() =>
-                  RedirectTo(ApplicationConstants.ROUTE_REPORT_STRAY)
+                  RedirectTo(ApplicationConstants.ROUTE_REPORT_STRAY_HISTORY)
                 }
                 default
               >
@@ -135,7 +135,11 @@ function Header() {
               </Button>
             </div>
             <div>
-              <Button className="text-lg border-b-2 w-[100%] text-left" default>
+              <Button
+                className="text-lg border-b-2 w-[100%] text-left"
+                onClick={() => RedirectTo(ApplicationConstants.ROUTE_ADOPT_PET)}
+                default
+              >
                 Adopt a Pet
               </Button>
             </div>

@@ -7,7 +7,15 @@ import Input from "../../components/formElements/Input";
 import SelectInput from "../../components/formElements/SelectInput";
 import TextArea from "../../components/formElements/TextArea";
 import Button from "../../components/buttons/Button";
-import { API_LINKS } from "../../contants/ApplicationConstants";
+import {
+  API_LINKS,
+  ApplicationConstants,
+} from "../../contants/ApplicationConstants";
+import { UploadFile } from "../../components/utilities/media/UploadFileUtil";
+import { PetData } from "../../components/utilities/models/PetData";
+import { SubmitReportStray } from "../../components/utilities/services/DataHandler";
+import { GetProfileInformation } from "../../components/utilities/services/AuthenticationHandler";
+import { RedirectTo } from "../../components/utilities/PageUtils";
 
 function ReportStrayPage() {
   const [file, setFile] = useState(null);
@@ -19,35 +27,84 @@ function ReportStrayPage() {
   const [reportType, setReportType] = useState("");
   const [breed, setBreed] = useState("");
   const [address, setAddress] = useState("");
-  const [remark, setRemark] = useState("");
+  const [remarks, setRemark] = useState("");
 
-  const handleSubmit = () => {
+  const handleSubmit = async () => {
     if (!file) {
-      alert("no file");
+      alert("Please upload an image");
       return;
     }
 
-    let formData = new FormData();
-    formData.append("File", file, `REPORT_FILE.${file.name.split(".")[1]}`);
-    const config = {
-      method: "POST",
-      body: formData,
-    };
+    // get the reporter Id which is the user who reports
+    let reporter = GetProfileInformation().id;
 
-    fetch(API_LINKS.MEDIA_UPLOAD, config);
+    // build object
+    var petData = new PetData({
+      name: petName,
+      animalType,
+      gender,
+      weight,
+      height,
+      reportType,
+      breed,
+      address,
+      remarks,
+      reporter,
+      status: "Reported",
+    });
+
+    if (petName === "") {
+      alert("Please provide a name for the animal for reference");
+      return;
+    }
+
+    if (animalType === "") {
+      alert("Please provide an animal type for reference");
+      return;
+    }
+
+    if (reportType === "") {
+      alert("Please provide an report type for reference");
+      return;
+    }
+
+    if (address === "") {
+      alert("Please provide an address for reference");
+      return;
+    }
+
+    if (weight === "" || weight < 0) petData.weight = 0;
+    if (height === "" || weight < 0) petData.height = 0;
+
+    const responseData = await SubmitReportStray(petData);
+    if (responseData.success) {
+      let fileName = responseData.id;
+      await UploadFile(API_LINKS.MEDIA_UPLOAD, file, fileName);
+      alert("Report submitted");
+      RedirectTo(ApplicationConstants.ROUTE_REPORT_STRAY_HISTORY);
+    }
   };
 
   return (
     <PageContainer>
       <Header />
+
       <MobileView className="px-8 mb-10">
         <div className="text-left">
           <h1 className="text-xl font-bold primary-1">
+            <Button
+              className="fa-solid fa-arrow-left w-[60px] text-black"
+              onClick={() => {
+                RedirectTo(ApplicationConstants.ROUTE_REPORT_STRAY_HISTORY);
+              }}
+              default
+            />
             Report an Animal{" "}
             <i className="fa-solid fa-bullhorn text-red-500"></i>
           </h1>
+          <div></div>
 
-          <div className="w-[100%]">
+          <div className="w-[100%] mt-5">
             <FileInput
               set={setFile}
               placeholder="Upload Image"
@@ -189,6 +246,7 @@ function ReportStrayPage() {
                   containerClassname="w-full"
                   className="w-full resize-none"
                   placeholder="Say something about the animal..."
+                  set={setRemark}
                 />
               </div>
             </div>

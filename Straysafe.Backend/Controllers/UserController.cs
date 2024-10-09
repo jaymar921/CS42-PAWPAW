@@ -43,7 +43,7 @@ namespace Straysafe.Backend.Controllers
         }
 
         [HttpPatch("Update")]
-        public async Task<IActionResult> Login([FromBody] User updatedUser)
+        public async Task<IActionResult> Update([FromBody] User updatedUser)
         {
             var user = _repository.GetAll().FirstOrDefault(u => u.Id == updatedUser.Id);
 

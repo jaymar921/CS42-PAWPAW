@@ -26,6 +26,7 @@ export const ApplicationConstants = {
     ROUTE_ADD_PET_FOR_ADOPTION: "/adopt-pet/add",
     ROUTE_PROFILE: "/profile",
     ROUTE_REPORT_STRAY: "/report_stray",
+    ROUTE_REPORT_STRAY_HISTORY: "/report_stray_history",
     LANDING_PAGE_ABOUT_1: `
         "StraySafe" is designed to address animal welfare by offering a
         comprehensive, community-based platform to streamline the processes
@@ -50,5 +51,11 @@ export const API_LINKS = {
     USER_GET_ALL: APIUrl + "/user/getall",
     USER_DELETE: APIUrl + "/user/delete",
     USER_UPDATE: APIUrl + "/user/update",
-    MEDIA_UPLOAD: APIUrl + "/media/upload"
+    MEDIA_UPLOAD: APIUrl + "/media/upload",
+    MEDIA_DOWNLOAD: (filename) => APIUrl + `/media/download?fileName=${filename}`,
+    REPORT_STRAY_GET: (id) => APIUrl + `/reportstray/get?Id=${id}`,
+    REPORT_STRAY_DELETE: (id) => APIUrl + `/reportstray/delete?Id=${id}`,
+    REPORT_STRAY_GETALL: APIUrl + "/reportstray/getall",
+    REPORT_STRAY_ADD: APIUrl + "/reportstray/add",
+    REPORT_STRAY_UPDATE: APIUrl + "/reportstray/update",
 }

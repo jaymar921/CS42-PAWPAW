@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.StaticFiles;
 using Straysafe.Backend.Services.Media;
 
 namespace Straysafe.Backend.Controllers
@@ -24,5 +25,43 @@ namespace Straysafe.Backend.Controllers
             return BadRequest(new { Message = "There was an issue uploading the file", Success = false });
         }
 
+        [HttpGet("Download")]
+        public async Task<IActionResult> DownloadFile([FromQuery] string fileName)
+        {
+            if (string.IsNullOrEmpty(fileName)) return BadRequest(
+                new
+                {
+                    Message = "Filename must be specified, no need the extention, as long as it matches in the backend.",
+                    Success = false
+                });
+
+            // locate  all the files
+            var files = Directory.GetFiles(Path.Combine(_webHostEnvironment.WebRootPath, "files"), "*.*");
+            var directoryFileName = "";
+            if (files.Length > 0)
+            {
+                foreach (var file in files)
+                {
+                    if (file.Contains(fileName, StringComparison.OrdinalIgnoreCase))
+                    {
+                        var fileExtension = file.Split(fileName)[1];
+                        directoryFileName = fileName + fileExtension;
+                        break;
+                    }
+                }
+            }
+
+            if (string.IsNullOrEmpty(directoryFileName)) return NotFound(new { Message = "File not found", Success = false });
+
+            var filePath = Path.Combine(_webHostEnvironment.WebRootPath, "files", directoryFileName);
+            var provider = new FileExtensionContentTypeProvider();
+            if (!provider.TryGetContentType(filePath, out var contentType))
+            {
+                contentType = "application/octet-stream";
+            }
+
+            var fileBytes = await System.IO.File.ReadAllBytesAsync(filePath);
+            return File(fileBytes, contentType);
+        }
     }
 }
