@@ -45,7 +45,7 @@ function App() {
               element={<PetAdoptionPage />}
             />
             <Route
-              path={ApplicationConstants.ROUTE_VIEW_PET_PROFILE("*")}
+              path={ApplicationConstants.ROUTE_VIEW_PET_PROFILE(":id")}
               element={<ViewPetProfilePage />}
             />
             <Route

@@ -14,5 +14,6 @@ export class PetData{
         this.status = status ?? "";
         this.reportDate = new Date().toISOString();
         this.metadata = "";
+        this.owner = "";
     }
 }

@@ -17,5 +17,6 @@
         public string Status { get; set; } = string.Empty;
         public DateTime ReportDate { get; set; } = DateTime.Now;
         public string Metadata { get; set; } = string.Empty;
+        public string Owner {  get; set; } = string.Empty;
     }
 }

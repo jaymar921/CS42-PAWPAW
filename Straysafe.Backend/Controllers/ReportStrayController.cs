@@ -87,7 +87,11 @@ namespace Straysafe.Backend.Controllers
             if (!string.IsNullOrEmpty(report.Status))
                 existingReport.Status = report.Status;
             if (!string.IsNullOrEmpty(report.Metadata))
-                existingReport.Metadata = report.Metadata;
+                existingReport.Metadata = report.Metadata; 
+            if (!string.IsNullOrEmpty(report.Owner))
+                existingReport.Owner = report.Owner;
+            if (!string.IsNullOrEmpty(report.Organization))
+                existingReport.Organization = report.Organization;
 
 
             bool result = await _repository.UpdateAsync(existingReport);

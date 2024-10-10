@@ -91,9 +91,10 @@ function Header() {
               </>
             )}
 
+            {/* 
             <div className="text-center w-auto">
               <Button icon="fa-solid fa-magnifying-glass" default></Button>
-            </div>
+            </div> */}
             <div className="relative text-center w-auto hidden sm:block group">
               <Button
                 icon="fa-solid fa-user"

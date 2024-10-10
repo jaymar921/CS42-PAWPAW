@@ -33,8 +33,13 @@ function PostedView({ setView, setData }) {
           continue;
         var reporterId = report.reporter;
         var reporterDetails = await RetrieveSingleAccount(reporterId);
+        var organizationDetails =
+          report.organization &&
+          (await RetrieveSingleAccount(report.organization));
 
         report.reporterDetails = reporterDetails;
+        report.organizationDetails = organizationDetails;
+
         reportData.push([
           `${reporterDetails.firstName} ${reporterDetails.lastName}`,
           report.name,
