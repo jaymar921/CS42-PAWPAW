@@ -12,5 +12,7 @@ export class PetData{
         this.reporter = reporter ?? "";
         this.organization = organization ?? "";
         this.status = status ?? "";
+        this.reportDate = new Date().toISOString();
+        this.metadata = "";
     }
 }

@@ -1,10 +1,34 @@
-import React from "react";
+import React, { useState } from "react";
 import PageContainer from "../../components/containers/PageContainer";
 import Header from "../../components/headers/Header";
 import Button from "../../components/buttons/Button";
-import TableView from "../../components/containers/TableView";
+import StrayView from "./views/StrayView";
+import InformationReportView from "./views/InformationReportView";
+import FoundView from "./views/FoundView";
+import LostView from "./views/LostView";
+import PostedView from "./views/PostedView";
 
+function View({ view, data, setView, setData }) {
+  if (view === "stray")
+    return <StrayView setView={setView} setData={setData} />;
+  if (view === "info") return <InformationReportView data={data} />;
+  if (view === "found")
+    return <FoundView setView={setView} setData={setData} />;
+  if (view === "lost") return <LostView setView={setView} setData={setData} />;
+  if (view === "posted")
+    return <PostedView setView={setView} setData={setData} />;
+  return <></>;
+}
+
+function btnActive(name, view) {
+  if (view === name)
+    return "w-full text-white bg-primary-1 border-[1px] rounded-lg font-bold";
+  return "w-full bg-white border-[#1794A1] border-[1px] rounded-lg font-bold";
+}
 function ReportsPage() {
+  const [view, setView] = useState("stray");
+  const [data, setData] = useState(null);
+
   return (
     <div>
       <PageContainer>
@@ -13,53 +37,52 @@ function ReportsPage() {
           <div className="border-r-2 border-gray-400 h-full col-span-1">
             <h1 className="text-left primary-1 text-[30px]">Reports</h1>
             <div className="w-[80%] text-center my-2">
-              <Button className="w-full">Stray Pets</Button>
+              <Button
+                className={btnActive("stray", view)}
+                onClick={() => {
+                  setView("stray");
+                }}
+                default
+              >
+                Stray Pets
+              </Button>
             </div>
-            <div className="w-[80%] text-center my-2">
-              <Button className="w-full bg-white border-[#1794A1] border-[1px] text-black">
+            <div className="w-[80%] text-center my-2 text-black">
+              <Button
+                className={btnActive("lost", view)}
+                onClick={() => {
+                  setView("lost");
+                }}
+                default
+              >
+                Lost Pets
+              </Button>
+            </div>
+            <div className="w-[80%] text-center my-2 text-black">
+              <Button
+                className={btnActive("found", view)}
+                onClick={() => {
+                  setView("found");
+                }}
+                default
+              >
                 Found Pets
               </Button>
             </div>
-          </div>
-          <div className="h-full col-span-2">
-            <div className="relative left-[50%] translate-x-[-50%] w-[80%] h-[70%]">
-              <h1 className="text-xl font-bold primary-1">View: Stray Pets</h1>
-              <TableView
-                TableHeader={[
-                  "Reported by",
-                  "Animal Type",
-                  "Report Date",
-                  "Status",
-                ]}
-                TableRows={[
-                  [
-                    "User 1",
-                    "Cat",
-                    new Date().toLocaleDateString(),
-                    <p
-                      key={Math.random() * 999999}
-                      className="bg-green-300 rounded-full p-1"
-                    >
-                      Reported
-                    </p>,
-                  ],
-                  [
-                    "User 1",
-                    "Cat",
-                    new Date().toLocaleDateString(),
-                    <p
-                      key={Math.random() * 999999}
-                      className="bg-yellow-300 rounded-full p-1"
-                    >
-                      Rescued
-                    </p>,
-                  ],
-                ]}
-                actionChildren="View Report Details"
-                actionClassName="border-[#1794A1] border-2 p-1 rounded-full"
-              />
+            <div className="w-[80%] text-center my-2 text-black">
+              <Button
+                className={btnActive("posted", view)}
+                onClick={() => {
+                  setView("posted");
+                }}
+                default
+              >
+                Posted and Adopted Pets
+              </Button>
             </div>
           </div>
+          {/* Display view */}
+          {View({ view, setView: setView, data, setData })}
         </div>
       </PageContainer>
     </div>

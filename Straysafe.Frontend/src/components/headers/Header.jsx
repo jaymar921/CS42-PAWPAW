@@ -46,13 +46,34 @@ function Header() {
               loggedInAccount.role === AuthConstants.ROLE_ORGANIZATION && (
                 <>
                   <div className="text-center w-auto font-bold hidden sm:block">
-                    <Button default>Announcement</Button>
+                    <Button
+                      onClick={() =>
+                        RedirectTo(ApplicationConstants.ROUTE_ANNOUNCEMENT)
+                      }
+                      default
+                    >
+                      Announcement
+                    </Button>
                   </div>
                   <div className="text-center w-auto font-bold hidden sm:block">
-                    <Button default>Chats</Button>
+                    <Button
+                      onClick={() =>
+                        RedirectTo(ApplicationConstants.ROUTE_CHAT)
+                      }
+                      default
+                    >
+                      Chats
+                    </Button>
                   </div>
                   <div className="text-center w-auto font-bold hidden sm:block">
-                    <Button default>Reports</Button>
+                    <Button
+                      onClick={() =>
+                        RedirectTo(ApplicationConstants.ROUTE_ORG_REPORTS)
+                      }
+                      default
+                    >
+                      Reports
+                    </Button>
                   </div>
                 </>
               )}

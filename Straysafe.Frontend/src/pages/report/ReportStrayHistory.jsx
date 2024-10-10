@@ -14,9 +14,7 @@ function ReportStrayHistory() {
 
   useEffect(() => {
     async function API_CALL() {
-      const data = await RetrieveReports({
-        reporter: GetProfileInformation().id,
-      });
+      const data = await RetrieveReports(GetProfileInformation().id, "");
       setReportedPets(data);
     }
 

@@ -34,6 +34,20 @@ namespace Straysafe.Backend.Controllers
             return Ok(result);
         }
 
+        [HttpGet("Get")]
+        public async Task<IActionResult> Get([FromQuery] string Id)
+        {
+            bool parseStatus = Guid.TryParse(Id, out var userId);
+
+            if (!parseStatus) return BadRequest(new { Message = "Failed to parse Id to GUID", Success = false });
+
+            var result = await _repository.GetAsync(userId);
+
+            if (result != null)
+                return Ok(new { Message = "Found user", Success = true, Data = result.GetDTO() });
+            return NotFound(new { Message = "No user found", Success = false });
+        }
+
         [HttpDelete("Delete")]
         public async Task<IActionResult> Delete(Guid Id)
         {

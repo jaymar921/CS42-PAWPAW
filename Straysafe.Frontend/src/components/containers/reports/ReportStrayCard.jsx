@@ -7,6 +7,12 @@ import Button from "../../buttons/Button";
 import { PetData } from "../../utilities/models/PetData";
 import { RedirectTo } from "../../utilities/PageUtils";
 
+function ChangeColor(value) {
+  if (value.toLowerCase() === "unlocated") return "text-red-600";
+  if (value.toLowerCase() === "rescued") return "text-blue-600";
+  if (value.toLowerCase() === "posted") return "text-orange-600";
+  return "text-green-600";
+}
 /**
  *
  * @param {PetData} petData
@@ -25,7 +31,8 @@ function ReportStrayCard({ petData }) {
         <div className="mx-2">
           <p>Report Type: {petData.reportType}</p>
           <p>
-            Status: <a className="text-green-600">{petData.status}</a>
+            Status:{" "}
+            <a className={`${ChangeColor(petData.status)}`}>{petData.status}</a>
           </p>
         </div>
         <div className="flex items-center m-auto mr-0">

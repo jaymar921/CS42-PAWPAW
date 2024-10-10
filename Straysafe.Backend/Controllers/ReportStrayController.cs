@@ -84,6 +84,10 @@ namespace Straysafe.Backend.Controllers
                 existingReport.Address = report.Address;
             if (!string.IsNullOrEmpty(report.Remarks))
                 existingReport.Remarks = report.Remarks;
+            if (!string.IsNullOrEmpty(report.Status))
+                existingReport.Status = report.Status;
+            if (!string.IsNullOrEmpty(report.Metadata))
+                existingReport.Metadata = report.Metadata;
 
 
             bool result = await _repository.UpdateAsync(existingReport);

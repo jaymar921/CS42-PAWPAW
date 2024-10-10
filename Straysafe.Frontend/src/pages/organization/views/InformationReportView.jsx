@@ -1,66 +1,52 @@
-import React, { useEffect, useState } from "react";
-import { useParams } from "react-router-dom";
-import { RedirectTo } from "../../components/utilities/PageUtils";
-import { PetData } from "../../components/utilities/models/PetData";
-import MobileView from "../../components/containers/MobileView";
-import PageContainer from "../../components/containers/PageContainer";
-import Header from "../../components/headers/Header";
-import { RetrieveSingleReport } from "../../components/utilities/services/DataHandler";
+import React, { useEffect } from "react";
+import { RedirectTo } from "../../../components/utilities/PageUtils";
 import {
   API_LINKS,
   ApplicationConstants,
-} from "../../contants/ApplicationConstants";
-import Button from "../../components/buttons/Button";
+} from "../../../contants/ApplicationConstants";
+import PageContainer from "../../../components/containers/PageContainer";
+import Button from "../../../components/buttons/Button";
+import { UpdateReportStray } from "../../../components/utilities/services/DataHandler";
 
-function ChangeColor(value) {
-  if (!value) return;
-  if (value.toLowerCase() === "unlocated") return "text-red-600";
-  if (value.toLowerCase() === "rescued") return "text-blue-600";
-  if (value.toLowerCase() === "posted") return "text-orange-600";
-  return "text-green-600";
-}
-
-function ReportStrayInformation() {
-  const parameter = useParams();
-  const [petData, setPetData] = useState({});
-
-  if (!parameter.id) RedirectTo(ApplicationConstants.ROUTE_LANDING);
-
+function InformationReportView({ data }) {
   useEffect(() => {
-    async function RetrieveData() {
-      const data = await RetrieveSingleReport(parameter.id);
-      if (!data) RedirectTo(ApplicationConstants.ROUTE_LANDING);
-      setPetData(data);
-    }
-    RetrieveData();
-  }, [parameter]);
+    if (data === null || data === undefined)
+      RedirectTo(ApplicationConstants.ROUTE_ORG_REPORTS);
+  }, [data]);
 
+  const handleUpdate = async (status) => {
+    let confirmation =
+      status.toLowerCase() !== "adopted"
+        ? confirm(`Confirm change status to ${status}?`)
+        : confirm(
+            `Once adopted, status will no longer be changed, are you sure you want to confirm?`
+          );
+    if (!confirmation) return;
+    var petData = data;
+    petData.status = status;
+
+    await UpdateReportStray(petData);
+    RedirectTo(ApplicationConstants.ROUTE_ORG_REPORTS);
+  };
   return (
-    <div>
-      <PageContainer className={"px-8"}>
-        <Header />
-        <div className="text-left">
-          <h1 className="text-xl font-bold primary-1">
-            <Button
-              className="fa-solid fa-arrow-left w-[60px] text-black"
-              onClick={() => {
-                RedirectTo(ApplicationConstants.ROUTE_REPORT_STRAY_HISTORY);
-              }}
-              default
-            />
-            Report Stray <i className="fa-solid fa-bullhorn text-red-500"></i>
-          </h1>
-        </div>
-        <MobileView className={"mb-8"}>
-          <div className="relative mt-8">
-            <div className="relative w-[90%] h-[300px] left-[50%] translate-x-[-50%] p-8 border-dashed border-primary-1 border-2 rounded-xl">
-              <img
-                className="w-full h-full object-cover rounded-xl"
-                src={API_LINKS.MEDIA_DOWNLOAD(petData.id)}
-              />
-            </div>
-          </div>
+    <PageContainer className="p-4 col-span-2">
+      <h1 className="text-xl font-bold primary-1">
+        <Button
+          icon="fa-solid fa-arrow-left text-black"
+          onClick={() => RedirectTo(ApplicationConstants.ROUTE_ORG_REPORTS)}
+          default
+        />
+        View: Report Details
+      </h1>
 
+      <div className="my-8 flex w-full ">
+        <div className="w-[50%] h-[400px]">
+          <img
+            className="w-full h-full object-cover"
+            src={API_LINKS.MEDIA_DOWNLOAD(data.id)}
+          />
+        </div>
+        <div className="w-[50%]">
           <div className="w-[100%] mt-5">
             <div className="grid grid-cols-3 my-2">
               <div className="col-span-1 items-center flex w-full text-xs">
@@ -69,7 +55,7 @@ function ReportStrayInformation() {
                 </label>
               </div>
               <div className="col-span-2 text-center items-center flex w-full texsmt-">
-                {petData.name}
+                {data.name}
               </div>
             </div>
 
@@ -80,7 +66,7 @@ function ReportStrayInformation() {
                 </label>
               </div>
               <div className="col-span-2 text-center items-center flex w-full text-sm">
-                {petData.animalType}
+                {data.animalType}
               </div>
             </div>
 
@@ -91,7 +77,7 @@ function ReportStrayInformation() {
                 </label>
               </div>
               <div className="col-span-2 text-center items-center flex w-full text-sm">
-                {petData.gender || "N/A"}
+                {data.gender || "N/A"}
               </div>
             </div>
 
@@ -102,7 +88,7 @@ function ReportStrayInformation() {
                 </label>
               </div>
               <div className="col-span-2 text-center items-center flex w-full text-sm">
-                {petData.weight > 0 ? petData.weight + " kg" : "N/A"}
+                {data.weight > 0 ? data.weight + " kg" : "N/A"}
               </div>
             </div>
 
@@ -113,7 +99,7 @@ function ReportStrayInformation() {
                 </label>
               </div>
               <div className="col-span-2 text-center items-center flex w-full text-sm">
-                {petData.height > 0 ? petData.height + " in" : "N/A"}
+                {data.height > 0 ? data.height + " in" : "N/A"}
               </div>
             </div>
 
@@ -124,7 +110,7 @@ function ReportStrayInformation() {
                 </label>
               </div>
               <div className="col-span-2 text-center items-center flex w-full text-sm">
-                {petData.reportType}
+                {data.reportType}
               </div>
             </div>
 
@@ -135,7 +121,7 @@ function ReportStrayInformation() {
                 </label>
               </div>
               <div className="col-span-2 text-center items-center flex w-full text-sm">
-                {petData.breed || "N/A"}
+                {data.breed || "N/A"}
               </div>
             </div>
 
@@ -146,7 +132,7 @@ function ReportStrayInformation() {
                 </label>
               </div>
               <div className="col-span-2 text-center items-center flex w-full text-sm">
-                {petData.address}
+                {data.address}
               </div>
             </div>
 
@@ -157,7 +143,7 @@ function ReportStrayInformation() {
                 </label>
               </div>
               <div className="col-span-2 justify-center items-center flex w-full text-sm">
-                {petData.remarks || "N/A"}
+                {data.remarks || "N/A"}
               </div>
             </div>
 
@@ -167,19 +153,49 @@ function ReportStrayInformation() {
                   Report Status:
                 </label>
               </div>
-              <div
-                className={`col-span-2 text-left flex w-full text-sm ${ChangeColor(
-                  petData.status
-                )}`}
-              >
-                {petData.status}
+              <div className="col-span-2 text-left flex w-full text-sm text-green-500">
+                {data.status}
               </div>
             </div>
+
+            {data.status !== "Adopted" && (
+              <>
+                <div className="w-full px-8 mt-5">
+                  <h1 className="primary-1 font-bold text-lg">Change Status</h1>
+                </div>
+                <div className="w-full px-8">
+                  <Button
+                    className="w-full my-2"
+                    onClick={() => handleUpdate("Rescued")}
+                  >
+                    Rescued
+                  </Button>
+                  <Button
+                    className="w-full my-2"
+                    onClick={() => handleUpdate("Unlocated")}
+                  >
+                    Failed to Locate
+                  </Button>
+                  <Button
+                    className="w-full my-2"
+                    onClick={() => handleUpdate("Posted")}
+                  >
+                    Post to Adoption
+                  </Button>
+                  <Button
+                    className="w-full my-2 bg-green-500"
+                    onClick={() => handleUpdate("Adopted")}
+                  >
+                    Adopted
+                  </Button>
+                </div>
+              </>
+            )}
           </div>
-        </MobileView>
-      </PageContainer>
-    </div>
+        </div>
+      </div>
+    </PageContainer>
   );
 }
 
-export default ReportStrayInformation;
+export default InformationReportView;
