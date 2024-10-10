@@ -8,6 +8,8 @@ namespace Straysafe.Backend.Data
     {
         public DbSet<User> Users { get; set; }
         public DbSet<Reports> Reports { get; set; }
+        public DbSet<ChatData> ChatData { get; set; }
+        public DbSet<ChatInformation> ChatInformation { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
