@@ -2,6 +2,8 @@
 using Microsoft.EntityFrameworkCore;
 using Straysafe.Backend.Common.DAL.Models;
 using Straysafe.Backend.Data;
+using Straysafe.Backend.Hubs;
+using Straysafe.Backend.Services.Chat;
 using Straysafe.Backend.Services.Repositories;
 
 namespace Straysafe.Backend
@@ -23,6 +25,14 @@ namespace Straysafe.Backend
 
             builder.Services.AddScoped<IRepository<User>, UserRepository>();
             builder.Services.AddScoped<IRepository<Reports>, ReportRepository>();
+            builder.Services.AddScoped<IRepository<ChatInformation>, ChatInformationRepository>();
+            builder.Services.AddScoped<IRepository<ChatData>, ChatDataRepository>();
+
+            builder.Services.AddSingleton<SessionSingleton>();
+
+            builder.Services.AddScoped<ChatHandler>();
+            builder.Services.AddScoped<ChatHub>();
+            builder.Services.AddSignalR();
 
             var app = builder.Build();
 
@@ -35,12 +45,18 @@ namespace Straysafe.Backend
 
             app.UseCors(options => options.SetIsOriginAllowed(x => _ = true).AllowAnyMethod().AllowCredentials().AllowAnyHeader());
 
-            app.UseHttpsRedirection();
+            //app.UseHttpsRedirection();
+            app.UseRouting();
 
             app.UseAuthorization();
 
 
             app.MapControllers();
+            // chathub endpoint
+            app.UseEndpoints(endpoints =>
+            {
+                var h = endpoints.MapHub<ChatHub>("/chathub");
+            });
 
             app.Run();
         }

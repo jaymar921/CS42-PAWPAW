@@ -1,4 +1,5 @@
 import { API_LINKS } from "../../../contants/ApplicationConstants"
+import { ChatData } from "../models/chatUtility/ChatData";
 import { PetData } from "../models/PetData"
 import { UserData } from "../models/UserData";
 
@@ -82,4 +83,29 @@ export const RetrieveSingleAccount = async (id) => {
     const response = await fetch(API_LINKS.USER_GET(id) , content);
     const data = await response.json();
     return data.data;
+}
+
+/**
+ * 
+ * @param {ChatData} chatData 
+ * @returns 
+ */
+export const SubmitChat = async (chatData) => {
+    const content = {
+        method: "POST",
+        headers: { "content-type": "application/json"},
+        body: JSON.stringify(chatData)
+    }
+    const response = await fetch(API_LINKS.CHAT_SUBMIT, content);
+    return await response.json();
+}
+
+export const GetLatestChat = async (chatInfo) => {
+    const response = await fetch(API_LINKS.CHAT_GET_LATEST(chatInfo));
+    return await response.json();
+}
+
+export const GetFirstChat = async (chatInfo) => {
+    const response = await fetch(API_LINKS.CHAT_GET_FIRST(chatInfo));
+    return await response.json();
 }

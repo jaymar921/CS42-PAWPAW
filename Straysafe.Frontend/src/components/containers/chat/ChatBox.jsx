@@ -15,9 +15,11 @@ function ChatBox({
   message,
   dateTimeStamp = new Date(),
   profilePhoto,
+  id = "",
 }) {
   return (
     <div
+      id={id}
       className="relative grid grid-cols-2 h-fit my-2"
       title={`Sent on ${dateTimeStamp.toLocaleString()}`}
     >
@@ -34,8 +36,8 @@ function ChatBox({
               src={profilePhoto}
             />
           )}
-          <div className="h-fit p-2 rounded-xl bg-gray-300">
-            <div>{message}</div>
+          <div className="h-fit p-2 rounded-xl bg-gray-300 w-fit max-w-[100px] text-wrap break-words">
+            <div className="max-w-[100px] text-wrap break-words">{message}</div>
           </div>
           {position === ChatPosition.Right && (
             <img className="w-10 h-10 rounded-full ml-2" src={profilePhoto} />

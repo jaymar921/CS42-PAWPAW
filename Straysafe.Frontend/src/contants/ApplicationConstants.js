@@ -22,6 +22,7 @@ export const ApplicationConstants = {
     ROUTE_ANNOUNCEMENT: "/announcement",
     ROUTE_CHAT: "/chat",
     ROUTE_ORG_REPORTS: "/reports",
+    ROUTE_CHAT_STRAYVER: "/chat-org",
     ROUTE_VIEW_PET_PROFILE: (id) => `/adopt-pet/profile/${id}`,
     ROUTE_ADD_PET_FOR_ADOPTION: "/adopt-pet/add",
     ROUTE_PROFILE: "/profile",
@@ -43,7 +44,8 @@ export const AuthConstants = {
     ROLE_ADMIN: "Admin"
 }
 
-const APIUrl = "http://localhost:5077";
+export const APIUrl = "http://localhost:5077";
+export const ChatHubUrl = "http://localhost:5077/chathub"
 
 export const API_LINKS = {
     USER_GET: (id) => APIUrl + `/user/get?id=${id}`,
@@ -59,4 +61,7 @@ export const API_LINKS = {
     REPORT_STRAY_GETALL: APIUrl + "/reportstray/getall",
     REPORT_STRAY_ADD: APIUrl + "/reportstray/add",
     REPORT_STRAY_UPDATE: APIUrl + "/reportstray/update",
+    CHAT_SUBMIT: APIUrl + "/chat/submit",
+    CHAT_GET_LATEST: (infoId) => APIUrl + `/chat/getlatest?chatInformation=${infoId}`,
+    CHAT_GET_FIRST: (infoId) => APIUrl + `/chat/getfirst?chatInformation=${infoId}`,
 }

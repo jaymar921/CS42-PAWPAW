@@ -13,16 +13,16 @@ function ChatUser({
       onClick={() => onClick && onClick()}
       title={`Click to message ${displayName}`}
     >
-      <div className="overflow-hidden">
+      <div className="w-[60px] h-[60px] overflow-hidden">
         <img
-          className="w-20 h-20 rounded-full object-cover"
+          className="w-[60px] h-[60px] rounded-full object-cover"
           src={profilePhoto}
         />
       </div>
-      <div className="flex items-center cursor-pointer">
-        <div className="px-4 overflow-clip">
-          <h1 className="font-bold text-xl">{displayName}</h1>
-          <p className="text-gray-500 truncate w-[200px]">{lastMessage}</p>
+      <div className="flex items-center cursor-pointer w-auto">
+        <div className="overflow-clip w-auto">
+          <h1 className="px-2 font-bold text-xl">{displayName}</h1>
+          <p className="px-2 text-gray-500 truncate w-[200px]">{lastMessage}</p>
         </div>
       </div>
     </div>

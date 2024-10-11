@@ -7,8 +7,8 @@ namespace Straysafe.Backend.Common.DAL.Models
     {
         [Key]
         public Guid Id { get; set; } = Guid.NewGuid();
-        public Guid ChatInfo { get; set; }
-        public string Topic { get; set; }
-        public string Metadata { get; set; }
+        public Guid ChatInfo { get; set; } = Guid.NewGuid();
+        public string Topic { get; set; } = string.Empty;
+        public string Metadata { get; set; } = string.Empty;
     }
 }

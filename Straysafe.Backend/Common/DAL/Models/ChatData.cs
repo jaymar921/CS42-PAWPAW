@@ -13,5 +13,6 @@ namespace Straysafe.Backend.Common.DAL.Models
         public Guid Recepient { get; set; }
         public string Message { get; set; } = string.Empty;
         public string Type { get; set; } = "msg"; /* msg | attachment */
+        public DateTime MessageDate { get; set; } = DateTime.Now;
     }
 }

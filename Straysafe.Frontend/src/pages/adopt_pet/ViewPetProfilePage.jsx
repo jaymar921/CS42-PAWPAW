@@ -121,7 +121,19 @@ const ViewPetProfilePage = () => {
           {/* Chat with user for adoption */}
           {GetProfileInformation()?.role === AuthConstants.ROLE_STRAYVER && (
             <div className="w-full text-center my-8">
-              <Button>Message Organization</Button>
+              <Button
+                onClick={() => {
+                  RedirectTo(
+                    `${ApplicationConstants.ROUTE_CHAT_STRAYVER}?tp=| ${
+                      petData.name
+                    }&og=${petData.organization}&st=${
+                      GetProfileInformation()?.id ?? "null"
+                    }`
+                  );
+                }}
+              >
+                Message Organization
+              </Button>
             </div>
           )}
         </div>

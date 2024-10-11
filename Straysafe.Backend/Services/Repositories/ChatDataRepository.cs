@@ -12,6 +12,7 @@ namespace Straysafe.Backend.Services.Repositories
             try
             {
                 var res = await _databaseContext.ChatData.AddAsync(entity);
+                var e = res.Entity;
                 await _databaseContext.SaveChangesAsync();
                 return res != null; ;
             }

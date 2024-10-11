@@ -16,6 +16,7 @@ import ReportsPage from "./pages/organization/ReportsPage";
 import ReportStrayPage from "./pages/report/ReportStrayPage";
 import ReportStrayHistory from "./pages/report/ReportStrayHistory";
 import ReportStrayInformation from "./pages/report/ReportStrayInformation";
+import StrayverChat from "./pages/StrayverChat";
 
 function App() {
   return (
@@ -63,6 +64,10 @@ function App() {
             <Route
               path={ApplicationConstants.ROUTE_CHAT}
               element={<ChatPage />}
+            />
+            <Route
+              path={ApplicationConstants.ROUTE_CHAT_STRAYVER}
+              element={<StrayverChat />}
             />
             <Route
               path={ApplicationConstants.ROUTE_ORG_REPORTS}
