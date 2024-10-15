@@ -74,6 +74,7 @@ namespace Straysafe.Backend.Hubs
                 do
                 {
                     var tempKVSession = _session.ChatSessionUpdatedKV;
+                    bool hasNew = false;
                     // retrieve all chats
                     foreach (var (chatInfoId, connectedUsers) in tempKVSession)
                     {
@@ -116,6 +117,7 @@ namespace Straysafe.Backend.Hubs
                             if(lastElement != null)
                             {
                                 lastSentChatId = lastElement.Id;
+                                hasNew = true;
                             }
                             await Clients.Caller.SendAsync("LatestChat-" + chatInfoId, toSendChats);
                         }
@@ -124,10 +126,11 @@ namespace Straysafe.Backend.Hubs
                             var lastChatData = chatDatas.LastOrDefault();
                             if (lastChatData != null) lastSentChatId = lastChatData.Id;
                             await Clients.Caller.SendAsync("LatestChat-" + chatInfoId, chatDatas);
+                            hasNew = true;
                         }
 
                         var firstChat = chatDatas.FirstOrDefault();
-                        if (firstChat != null)
+                        if (firstChat != null && hasNew)
                         {
                             var allChatInformations = _chatHandler.GetAllChatInformation(firstChat.Recepient.ToString());
                             await Clients.All.SendAsync("AllChatInformations", allChatInformations);
@@ -135,7 +138,7 @@ namespace Straysafe.Backend.Hubs
 
                         connectedUsers[connectionId] = lastSentChatId;
 
-
+                        hasNew = false;
                         Thread.Sleep(500);
                     }
 
