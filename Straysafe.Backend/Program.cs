@@ -1,5 +1,6 @@
 
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.DependencyInjection;
 using Straysafe.Backend.Common.DAL.Models;
 using Straysafe.Backend.Data;
 using Straysafe.Backend.Hubs;
@@ -27,6 +28,9 @@ namespace Straysafe.Backend
             builder.Services.AddScoped<IRepository<Reports>, ReportRepository>();
             builder.Services.AddScoped<IRepository<ChatInformation>, ChatInformationRepository>();
             builder.Services.AddScoped<IRepository<ChatData>, ChatDataRepository>();
+            builder.Services.AddScoped<IRepository<Announcement>, AnnouncementRepository>();
+            builder.Services.AddScoped<IRepository<AnnouncementMetadata>, AnnouncementMetadataRepository>();
+            builder.Services.AddScoped<IRepositoryExtension<AnnouncementMetadata>, AnnouncementMetadataRepository>();
 
             builder.Services.AddSingleton<SessionSingleton>();
 
