@@ -5,7 +5,7 @@ using Straysafe.Backend.Data;
 
 namespace Straysafe.Backend.Services.Repositories
 {
-    public class AnnouncementMetadataRepository(DatabaseContext databaseContext, ILogger<AnnouncementMetadataRepository> logger) : IRepository<AnnouncementMetadata>, IRepositoryExtension<AnnouncementMetadata>
+    public class AnnouncementMetadataRepository(DatabaseContext databaseContext, ILogger<AnnouncementMetadataRepository> logger) : IRepositoryExtension<AnnouncementMetadata>
     {
         private readonly DatabaseContext _databaseContext = databaseContext;
         private readonly ILogger<AnnouncementMetadataRepository> _logger = logger;
