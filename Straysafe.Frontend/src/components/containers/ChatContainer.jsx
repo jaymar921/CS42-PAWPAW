@@ -281,7 +281,7 @@ function ChatContainer({ minified = false }) {
           )}
         </div>
 
-        <div className="relative h-full col-span-2 border-2">
+        <div className="relative h-full col-span-2">
           {searchParams.get("tp") && (
             <div className="relative left-[50%] translate-x-[-50%] w-[80%] h-[70%]">
               <ChatUser
