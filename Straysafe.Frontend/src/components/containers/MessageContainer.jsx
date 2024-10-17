@@ -34,7 +34,7 @@ function MessageContainer({ Chats = [], focusChat }) {
               id={`message-${chatData.id}`}
               message={chatData.message}
               position={md[0]}
-              profilePhoto={API_LINKS.MEDIA_DOWNLOAD(md[1])}
+              profilePhoto={API_LINKS.MEDIA_DOWNLOAD(md[1], true)}
               dateTimeStamp={new Date(chatData.messageDate).toLocaleString()}
             />
           );

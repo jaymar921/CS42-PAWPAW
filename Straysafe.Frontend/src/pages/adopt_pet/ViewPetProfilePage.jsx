@@ -124,7 +124,7 @@ const ViewPetProfilePage = () => {
               <Button
                 onClick={() => {
                   RedirectTo(
-                    `${ApplicationConstants.ROUTE_CHAT_STRAYVER}?tp=| ${
+                    `${ApplicationConstants.ROUTE_CHAT_STRAYVER}?tp=Adoption: ${
                       petData.name
                     }&og=${petData.organization}&st=${
                       GetProfileInformation()?.id ?? "null"

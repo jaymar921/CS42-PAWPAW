@@ -26,3 +26,24 @@
 .hidden{
   display: none;
 }
+
+@media only screen and (max-width: 640px) {
+  .hide-on-mobile{
+    display: none;
+    opacity: 0;
+  }
+  .grid-or-block-3{
+    display: block;
+  }
+}
+
+@media only screen and (min-width: 640px) {
+  .show-on-mobile{
+    display: block;
+    opacity: 0;
+  }
+  .grid-or-block-3{
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+  }
+}

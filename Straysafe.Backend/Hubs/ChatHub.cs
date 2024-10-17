@@ -44,7 +44,8 @@ namespace Straysafe.Backend.Hubs
                 {
                     _session.ChatSessionUpdatedKV[chatInformation.ChatInfo] = [];
                 }
-                
+
+                _session.SetHasNewChat(chatInformation.ChatInfo, true);
             }
             await Clients.Caller.SendAsync("ChatInformation", chatInformation);
 
@@ -62,6 +63,7 @@ namespace Straysafe.Backend.Hubs
                 if (_session.ChatSessionUpdatedKV.ContainsKey(id))
                 {
                     await Groups.AddToGroupAsync(Context.ConnectionId, chatInfoId);
+                    _session.SetHasNewChat(id, true);
                 }
             }
         }
@@ -74,10 +76,11 @@ namespace Straysafe.Backend.Hubs
                 do
                 {
                     var tempKVSession = _session.ChatSessionUpdatedKV;
-                    bool hasNew = false;
                     // retrieve all chats
                     foreach (var (chatInfoId, connectedUsers) in tempKVSession)
                     {
+                        if (!_session.GetHasNewChat(chatInfoId)) continue;
+                        // check if there a new chat
                         var chatDatas = _chatHandler.GetAllChats(chatInfoId);
                         int lastSentChatId = 0;
                         /*
@@ -117,7 +120,6 @@ namespace Straysafe.Backend.Hubs
                             if(lastElement != null)
                             {
                                 lastSentChatId = lastElement.Id;
-                                hasNew = true;
                             }
                             await Clients.Caller.SendAsync("LatestChat-" + chatInfoId, toSendChats);
                         }
@@ -126,24 +128,24 @@ namespace Straysafe.Backend.Hubs
                             var lastChatData = chatDatas.LastOrDefault();
                             if (lastChatData != null) lastSentChatId = lastChatData.Id;
                             await Clients.Caller.SendAsync("LatestChat-" + chatInfoId, chatDatas);
-                            hasNew = true;
                         }
 
                         var firstChat = chatDatas.FirstOrDefault();
-                        if (firstChat != null && hasNew)
+                        if (firstChat != null)
                         {
                             var allChatInformations = _chatHandler.GetAllChatInformation(firstChat.Recepient.ToString());
                             await Clients.All.SendAsync("AllChatInformations", allChatInformations);
                         }
 
                         connectedUsers[connectionId] = lastSentChatId;
-
-                        hasNew = false;
                         Thread.Sleep(500);
+
+                        _session.SetHasNewChat(chatInfoId, false);
                     }
 
                     Thread.Sleep(500);
                     _session.ChatSessionUpdatedKV = tempKVSession;
+
                 } while (true);
             }
             catch(Exception e) {

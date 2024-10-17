@@ -76,6 +76,7 @@ export const RetrieveSingleReport = async (id) => {
  * @returns {Promise<UserData?>}
  */
 export const RetrieveSingleAccount = async (id) => {
+    if(!id) return null
     const content = {
         method: "GET",
         headers: { "content-type": "application/json"},

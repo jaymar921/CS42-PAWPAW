@@ -3,12 +3,14 @@ import PageContainer from "../../components/containers/PageContainer";
 import Header from "../../components/headers/Header";
 import Button from "../../components/buttons/Button";
 import AnnouncementCard from "../../components/cards/AnnouncementCard";
-import { AnnouncementData } from "../../components/utilities/models/AnnouncementData";
 import AddOrEditAnnouncementModal from "../../components/modals/AddOrEditAnnouncementModal";
 import { GetAllAnnouncements } from "../../components/utilities/services/DataHandler";
+import ViewAnnouncementModal from "../../components/modals/ViewAnnouncementModal";
+import { GetProfileInformation } from "../../components/utilities/services/AuthenticationHandler";
 
 function AnnouncementPage() {
   const [showModal, setShowModal] = useState(false);
+  const [showAnnouncementModal, setShowAnnouncementModal] = useState(false);
   const [announcementData, setAnnouncementData] = useState(null);
   const [announcements, setAnnouncements] = useState([]);
 
@@ -28,6 +30,11 @@ function AnnouncementPage() {
     setShowModal(!showModal);
   };
 
+  const handleShowAnnouncementModal = (data) => {
+    setAnnouncementData(data);
+    setShowAnnouncementModal(!showAnnouncementModal);
+  };
+
   const handleEditAnnouncement = (a_data) => {
     setAnnouncementData(a_data);
     setShowModal(true);
@@ -41,19 +48,32 @@ function AnnouncementPage() {
           refresh={refresh}
         />
       )}
-      <PageContainer className={`${showModal && "blur-sm"}`}>
+
+      {showAnnouncementModal && (
+        <ViewAnnouncementModal
+          showOrClose={handleShowAnnouncementModal}
+          announcementData={announcementData}
+          refresh={refresh}
+        />
+      )}
+      <PageContainer
+        className={`${(showModal || showAnnouncementModal) && "blur-sm"}`}
+      >
         <Header />
         <h1 className="text-[30px] primary-1 font-bold my-4">Announcements</h1>
-        <div className="text-right w-100 hidden sm:block">
-          <Button onClick={handleShowModal}>Add an Announcement</Button>
-        </div>
-        <div className="relative w-[95%] md:w-[80%] left-[50%] translate-x-[-50%] my-8">
+        {GetProfileInformation() && (
+          <div className="text-right w-100 hidden sm:block">
+            <Button onClick={handleShowModal}>Add an Announcement</Button>
+          </div>
+        )}
+        <div className="relative w-[95%] md:w-[80%] left-[50%] translate-x-[-50%] h-[70vh] my-8 overflow-y-auto">
           {announcements.map((announcement) => {
             return (
               <AnnouncementCard
                 AnnouncementData={announcement}
                 key={announcement.id}
                 actionCallback={handleEditAnnouncement}
+                onClick={handleShowAnnouncementModal}
                 editable
               />
             );

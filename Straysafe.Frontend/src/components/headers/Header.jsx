@@ -195,7 +195,11 @@ function Header() {
             <div>
               <Button
                 className="text-lg border-b-2 w-[100%] text-left"
-                onClick={() => RedirectTo(ApplicationConstants.ROUTE_CHAT)}
+                onClick={() =>
+                  RedirectTo(
+                    ApplicationConstants.ROUTE_CHAT_STRAYVER + "?sw=false"
+                  )
+                }
                 default
               >
                 Chat

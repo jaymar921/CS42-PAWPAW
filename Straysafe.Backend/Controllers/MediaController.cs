@@ -57,7 +57,7 @@ namespace Straysafe.Backend.Controllers
         }
 
         [HttpGet("Download")]
-        public async Task<IActionResult> DownloadFile([FromQuery] string fileName)
+        public async Task<IActionResult> DownloadFile([FromQuery] string fileName, [FromQuery] bool isProfile = false)
         {
             if (string.IsNullOrEmpty(fileName)) return BadRequest(
                 new
@@ -82,9 +82,13 @@ namespace Straysafe.Backend.Controllers
                 }
             }
 
-            if (string.IsNullOrEmpty(directoryFileName)) return NotFound(new { Message = "File not found", Success = false });
+            if (string.IsNullOrEmpty(directoryFileName) && !isProfile) return NotFound(new { Message = "File not found", Success = false });
+            if (string.IsNullOrEmpty(directoryFileName) && isProfile)
+            {
+                directoryFileName = "DEFAULT_PROFILE.png";
+            }
 
-            var filePath = Path.Combine(_webHostEnvironment.WebRootPath, "files", directoryFileName);
+                var filePath = Path.Combine(_webHostEnvironment.WebRootPath, "files", directoryFileName);
             var provider = new FileExtensionContentTypeProvider();
             if (!provider.TryGetContentType(filePath, out var contentType))
             {

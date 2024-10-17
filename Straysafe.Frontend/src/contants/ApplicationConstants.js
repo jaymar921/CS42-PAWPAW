@@ -56,7 +56,7 @@ export const API_LINKS = {
     USER_DELETE: APIUrl + "/user/delete",
     USER_UPDATE: APIUrl + "/user/update",
     MEDIA_UPLOAD: APIUrl + "/media/upload",
-    MEDIA_DOWNLOAD: (filename) => APIUrl + `/media/download?fileName=${filename}`,
+    MEDIA_DOWNLOAD: (filename, isProfile = false) => APIUrl + `/media/download?fileName=${filename}&isProfile=${isProfile}`,
     MEDIA_HAS: (filename) => APIUrl + `/media/has?fileName=${filename}`,
     REPORT_STRAY_GET: (id) => APIUrl + `/reportstray/get?Id=${id}`,
     REPORT_STRAY_DELETE: (id) => APIUrl + `/reportstray/delete?Id=${id}`,
