@@ -12,6 +12,7 @@ namespace Straysafe.Backend.Services.Repositories
         {
             try
             {
+                entity.Id = Guid.NewGuid();
                 await _databaseContext.Announcements.AddAsync(entity);
                 await _databaseContext.SaveChangesAsync();
                 return true;

@@ -6,9 +6,11 @@ namespace Straysafe.Backend.Controllers
 {
     [ApiController]
     [Route("[controller]")]
-    public class ReportStrayController(ILogger<ReportStrayController> logger, IRepository<Reports> repository): Controller
+    public class ReportStrayController(ILogger<ReportStrayController> logger, IRepository<Reports> repository, IRepository<Announcement> announcementRepo, IRepository<User> userRepo) : Controller
     {
         private readonly IRepository<Reports> _repository = repository;
+        private readonly IRepository<Announcement> _announcementRepo = announcementRepo;
+        private readonly IRepository<User> _userRepo = userRepo;
         private readonly ILogger<ReportStrayController> _logger = logger;
 
         [HttpGet("get")]
@@ -20,7 +22,7 @@ namespace Straysafe.Backend.Controllers
 
             var report = await _repository.GetAsync(reportId);
 
-            if(report == null) return NotFound(new { Message = "No report found", Success = false });
+            if (report == null) return NotFound(new { Message = "No report found", Success = false });
             return Ok(new { Data = report, Success = true, Message = "Retrieved report" });
         }
 
@@ -39,10 +41,27 @@ namespace Straysafe.Backend.Controllers
         public async Task<IActionResult> AddReport([FromBody] Reports report)
         {
             var result = await _repository.AddAsync(report);
+            var reporter = await _userRepo.GetAsync(Guid.Parse(report.Reporter));
+
+            if (result && reporter != null)
+            {
+                // create an announcement
+                var breedInfo = !string.IsNullOrEmpty(report.Breed) ? $"| {report.Breed}" : string.Empty;
+                var announcement = new Announcement
+                {
+                    Title = $"{report.ReportType} | {report.Name} {breedInfo}",
+                    Content = $"{reporter.FirstName} has reported a {report.ReportType} at {report.Address}. Details: {report.Remarks}. For inquiry, you may contact this person by phone ({reporter.ContactNumber}) or via email {reporter.Email}",
+                    Attachment = report.Id.ToString(),
+                    PostedBy = report.Reporter,
+                };
+
+                // save announcement
+                await _announcementRepo.AddAsync(announcement);
+            }
 
             if (result)
                 return Ok(new { Message = "Report added", Success = true, report.Id });
-            return BadRequest(new { Message = "Failed to add report", Success = false});
+            return BadRequest(new { Message = "Failed to add report", Success = false });
         }
 
         [HttpDelete("delete")]
@@ -87,7 +106,7 @@ namespace Straysafe.Backend.Controllers
             if (!string.IsNullOrEmpty(report.Status))
                 existingReport.Status = report.Status;
             if (!string.IsNullOrEmpty(report.Metadata))
-                existingReport.Metadata = report.Metadata; 
+                existingReport.Metadata = report.Metadata;
             if (!string.IsNullOrEmpty(report.Owner))
                 existingReport.Owner = report.Owner;
             if (!string.IsNullOrEmpty(report.Organization))
@@ -96,7 +115,7 @@ namespace Straysafe.Backend.Controllers
 
             bool result = await _repository.UpdateAsync(existingReport);
             if (!result) return BadRequest(new { Message = "Failed to Update Report", Success = false });
-            return Ok(new { Message = "Updated report", Success = true, NewData = existingReport});
+            return Ok(new { Message = "Updated report", Success = true, NewData = existingReport });
         }
     }
 }

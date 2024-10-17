@@ -1,13 +1,14 @@
 export class AnnouncementData{
     /**
      * 
-     * @param {{title: String, imageSrc: URL, postDate: Date, location: String, content: String }} param0 
+     * @param {{title: String, imageSrc: URL, postDate: Date, postedBy: String, content: String }} param0 
      */
-    constructor({title, imageSrc, postDate = new Date(), location, content}) {
-        this.Title = title,
-        this.ImageSource = imageSrc;
-        this.PostDate = postDate;
-        this.Location = location;
-        this.Content = content;
+    constructor({title, imageSrc, postDate = new Date(), postedBy, content}) {
+        this.id = "00000000-0000-0000-0000-000000000000";
+        this.title = title;
+        this.attachment = imageSrc;
+        this.date = postDate;
+        this.postedBy = postedBy;
+        this.content = content;
     }
 }

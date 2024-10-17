@@ -1,6 +1,10 @@
 import React from "react";
 import { AnnouncementData } from "../utilities/models/AnnouncementData";
 import Button from "../buttons/Button";
+import {
+  API_LINKS,
+  ApplicationConstants,
+} from "../../contants/ApplicationConstants";
 
 /**
  *
@@ -15,34 +19,37 @@ function AnnouncementCard({
   return (
     <div className="relative w-100 bg-gray-100 rounded-xl p-4 shadow-sm my-2">
       <h1 className="font-bold text-lg block sm:hidden">
-        {AnnouncementData && AnnouncementData.Title}
+        {AnnouncementData && AnnouncementData.title}
       </h1>
       <div className="flex">
-        <div className="col-span-3 w-[250px] h-[150px] rounded-xl overflow-hidden shadow-md">
+        <div className="w-[150px] h-[150px] rounded-xl overflow-hidden shadow-md">
           <img
-            className="object-cover h-[150px]"
-            src={AnnouncementData && AnnouncementData.ImageSource}
+            className="object-cover w-full h-full"
+            src={
+              (AnnouncementData &&
+                API_LINKS.MEDIA_DOWNLOAD(AnnouncementData.attachment)) ||
+              API_LINKS.MEDIA_DOWNLOAD(ApplicationConstants.DEFAULT_PROFILE)
+            }
           />
         </div>
-        <div className="col-span-6 p-2">
+        <div className="w-[300px] md:w-[80%] p-2">
           <h1 className="font-bold text-lg hidden sm:block">
-            {AnnouncementData && AnnouncementData.Title}
+            {AnnouncementData && AnnouncementData.title}
           </h1>
           <div className="text-xs">
             <p>
               Date:{" "}
               {AnnouncementData &&
-                AnnouncementData.PostDate.toLocaleDateString()}
+                new Date(AnnouncementData.date).toLocaleDateString()}
             </p>
             <p>
               Time:{" "}
               {AnnouncementData &&
-                AnnouncementData.PostDate.toLocaleTimeString()}
+                new Date(AnnouncementData.date).toLocaleTimeString()}
             </p>
-            <p>Location: {AnnouncementData && AnnouncementData.Location}</p>
           </div>
           <p className="h-[58px] text-sm overflow-y-hidden">
-            {AnnouncementData && AnnouncementData.Content}
+            {AnnouncementData && AnnouncementData.content}
           </p>
         </div>
         {editable && (

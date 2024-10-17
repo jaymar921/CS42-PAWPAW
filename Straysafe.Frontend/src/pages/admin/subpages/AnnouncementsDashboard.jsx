@@ -1,11 +1,21 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import PageContainer from "../../../components/containers/PageContainer";
 import Input from "../../../components/formElements/Input";
 import Button from "../../../components/buttons/Button";
 import AnnouncementCard from "../../../components/cards/AnnouncementCard";
 import { AnnouncementData } from "../../../components/utilities/models/AnnouncementData";
+import { GetAllAnnouncements } from "../../../components/utilities/services/DataHandler";
 
 function AnnouncementsDashboard() {
+  const [announcementData, setAnnouncementData] = useState([]);
+
+  useEffect(() => {
+    (async () => {
+      const announcements = await GetAllAnnouncements();
+      console.log(announcements);
+      console.log("test");
+    })();
+  }, []);
   return (
     <div>
       <PageContainer>

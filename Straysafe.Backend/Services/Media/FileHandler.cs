@@ -27,7 +27,7 @@
             try
             {
                 // copy the file using file stream (upload)
-                using FileStream stream = new(savePath, FileMode.CreateNew);
+                using FileStream stream = new(savePath, FileMode.Create);
                 await formFile.CopyToAsync(stream);
                 stream.Close();
             }

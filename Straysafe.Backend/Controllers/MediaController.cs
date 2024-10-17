@@ -25,6 +25,37 @@ namespace Straysafe.Backend.Controllers
             return BadRequest(new { Message = "There was an issue uploading the file", Success = false });
         }
 
+        [HttpGet("Has")]
+        public IActionResult HasFile([FromQuery] string fileName)
+        {
+            if (string.IsNullOrEmpty(fileName)) return BadRequest(
+                new
+                {
+                    Message = "Filename must be specified, no need the extention, as long as it matches in the backend.",
+                    Success = false
+                });
+
+            // locate  all the files
+            var files = Directory.GetFiles(Path.Combine(_webHostEnvironment.WebRootPath, "files"), "*.*");
+            var directoryFileName = "";
+            if (files.Length > 0)
+            {
+                foreach (var file in files)
+                {
+                    if (file.Contains(fileName, StringComparison.OrdinalIgnoreCase))
+                    {
+                        var fileExtension = file.Split(fileName)[1];
+                        directoryFileName = fileName + fileExtension;
+                        break;
+                    }
+                }
+            }
+
+            if (string.IsNullOrEmpty(directoryFileName)) return NotFound(new { Message = "File not found", Success = false });
+
+            return Ok(new { Message = "File Exists", Success = true });
+        }
+
         [HttpGet("Download")]
         public async Task<IActionResult> DownloadFile([FromQuery] string fileName)
         {

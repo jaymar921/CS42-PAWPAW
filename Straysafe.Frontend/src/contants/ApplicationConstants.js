@@ -28,6 +28,7 @@ export const ApplicationConstants = {
     ROUTE_PROFILE: "/profile",
     ROUTE_REPORT_STRAY: "/report_stray",
     ROUTE_REPORT_STRAY_HISTORY: "/report_stray_history",
+    DEFAULT_PROFILE: "DEFAULT_PROFILE",
     LANDING_PAGE_ABOUT_1: `
         "StraySafe" is designed to address animal welfare by offering a
         comprehensive, community-based platform to streamline the processes
@@ -56,6 +57,7 @@ export const API_LINKS = {
     USER_UPDATE: APIUrl + "/user/update",
     MEDIA_UPLOAD: APIUrl + "/media/upload",
     MEDIA_DOWNLOAD: (filename) => APIUrl + `/media/download?fileName=${filename}`,
+    MEDIA_HAS: (filename) => APIUrl + `/media/has?fileName=${filename}`,
     REPORT_STRAY_GET: (id) => APIUrl + `/reportstray/get?Id=${id}`,
     REPORT_STRAY_DELETE: (id) => APIUrl + `/reportstray/delete?Id=${id}`,
     REPORT_STRAY_GETALL: APIUrl + "/reportstray/getall",
@@ -64,4 +66,8 @@ export const API_LINKS = {
     CHAT_SUBMIT: APIUrl + "/chat/submit",
     CHAT_GET_LATEST: (infoId) => APIUrl + `/chat/getlatest?chatInformation=${infoId}`,
     CHAT_GET_FIRST: (infoId) => APIUrl + `/chat/getfirst?chatInformation=${infoId}`,
+    ANNOUNCEMENT_GETALL_URL: APIUrl + "/announcement/getall",
+    ANNOUNCEMENT_ADD_URL: APIUrl + "/announcement/add",
+    ANNOUNCEMENT_DELETE_URL: (id)=> APIUrl + `/announcement/delete?announcementId=${id}`,
+    ANNOUNCEMENT_UPDATE_URL: APIUrl + "/announcement/update",
 }
