@@ -33,6 +33,7 @@ function VerifyAccountModal({
       await repo.DeleteAccount(organization.id);
     } else if (createOrganization && accept) {
       organization.locked = false;
+      organization.password = "";
       await repo.UpdateAccount(organization);
     }
 
