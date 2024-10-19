@@ -23,6 +23,8 @@ export const ApplicationConstants = {
     ROUTE_CHAT: "/chat",
     ROUTE_ORG_REPORTS: "/reports",
     ROUTE_CHAT_STRAYVER: "/chat-org",
+    ROUTE_DONATION: "/donation",
+    ROUTE_PET_REPORT_PAGE: (type, value)=> `/pet-reports/${type}${(value) ? `/${value}` : ""}`,
     ROUTE_VIEW_PET_PROFILE: (id) => `/adopt-pet/profile/${id}`,
     ROUTE_ADD_PET_FOR_ADOPTION: "/adopt-pet/add",
     ROUTE_PROFILE: "/profile",
