@@ -39,6 +39,15 @@ namespace Straysafe.Backend
 
             var app = builder.Build();
 
+            // db migration
+            using (var scope = app.Services.CreateScope())
+            {
+                var dbContext = scope.ServiceProvider.GetRequiredService<DatabaseContext>();
+
+                // ensure that database is created and up-to-date on app run
+                dbContext?.Database.Migrate();
+            }
+
             // Configure the HTTP request pipeline.
             if (app.Environment.IsDevelopment())
             {
