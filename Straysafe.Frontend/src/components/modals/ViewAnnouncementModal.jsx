@@ -1,7 +1,10 @@
 import React, { useEffect, useState } from "react";
 import Button from "../buttons/Button";
 import { UserData } from "../utilities/models/UserData";
-import { RetrieveSingleAccount } from "../utilities/services/DataHandler";
+import {
+  RetrieveSingleAccount,
+  RetrieveSingleReport,
+} from "../utilities/services/DataHandler";
 import { AnnouncementData } from "../utilities/models/AnnouncementData";
 import {
   API_LINKS,
@@ -19,11 +22,14 @@ function ViewAnnouncementModal({ showOrClose, announcementData, refresh }) {
   const [reporter, setReporter] = useState(
     new UserData({ uid: "", firstName: "---", lastName: "" })
   );
+  const [allowChat, setAllowChat] = useState(true);
 
   useEffect(() => {
     (async () => {
       const data = await RetrieveSingleAccount(announcementData.postedBy);
       setReporter(data);
+      const report = await RetrieveSingleReport(announcementData.attachment);
+      if (report.status.toLowerCase().includes("adopted")) setAllowChat(false);
     })();
   }, [announcementData]);
   return (
@@ -62,7 +68,8 @@ function ViewAnnouncementModal({ showOrClose, announcementData, refresh }) {
           </div>
         </div>
         {GetProfileInformation() &&
-          GetProfileInformation().id !== announcementData.postedBy && (
+          GetProfileInformation().id !== announcementData.postedBy &&
+          allowChat && (
             <div className="text-center text-sm mb-3">
               <Button
                 icon={"fa-solid fa-paper-plane"}

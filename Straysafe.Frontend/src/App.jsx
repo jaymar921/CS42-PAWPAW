@@ -20,6 +20,7 @@ import StrayverChat from "./pages/StrayverChat";
 import PetReportPage from "./pages/strayver_views/PetReportPage";
 import DonationPage from "./pages/DonationPage";
 import PetReportViewPetProfilePage from "./pages/strayver_views/PetReportViewPetProfilePage";
+import ProfilePage from "./pages/ProfilePage";
 
 function App() {
   return (
@@ -102,6 +103,10 @@ function App() {
             <Route
               path={ApplicationConstants.ROUTE_DONATION}
               element={<DonationPage />}
+            />
+            <Route
+              path={ApplicationConstants.ROUTE_PROFILE}
+              element={<ProfilePage />}
             />
             <Route
               path="*"
