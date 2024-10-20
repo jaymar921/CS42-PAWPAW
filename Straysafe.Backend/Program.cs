@@ -30,6 +30,8 @@ namespace Straysafe.Backend
             builder.Services.AddScoped<IRepository<ChatData>, ChatDataRepository>();
             builder.Services.AddScoped<IRepository<Announcement>, AnnouncementRepository>();
             builder.Services.AddScoped<IRepositoryExtension<AnnouncementMetadata>, AnnouncementMetadataRepository>();
+            builder.Services.AddScoped<IRepository<Notification>, NotificationRepository>();
+            builder.Services.AddScoped<IRepository<Donation>, DonationRepository>();
 
             builder.Services.AddSingleton<SessionSingleton>();
 
