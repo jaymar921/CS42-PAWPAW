@@ -16,7 +16,7 @@ function DonationsDashboard() {
         tempData.push([
           "₱" + d.amount,
           new Date(d.issueDate).toDateString(),
-          d.remarks,
+          new String(d.remarks).split("|")[0],
         ]);
       }
 

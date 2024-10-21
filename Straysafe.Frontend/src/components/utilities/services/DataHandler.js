@@ -195,3 +195,18 @@ export const GetDonations = async () => {
     const data = await response.json();
     return data.data;
 }
+
+/**
+ * @param {Donation} donation
+ * @returns {Promise<any>}
+ */
+export const SubmitDonation = async (donation) => {
+    const content = {
+        method: "POST",
+        headers: { "content-type": "application/json"},
+        body: JSON.stringify(donation)
+    }
+    const response = await fetch(API_LINKS.DONATIONS_ADD, content);
+    const data = await response.json();
+    return data;
+}

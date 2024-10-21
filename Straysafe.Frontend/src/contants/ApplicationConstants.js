@@ -4,6 +4,7 @@ import LandingPageImage from "../assets/images/landing/landingimg.png";
 import SampleCardImg from "../assets/images/samples/catImg.png";
 import LandingPageImage_Adopt from "../assets/images/landing/adoptimage.png"
 import UserActivityCardImg from "../assets/images/admin/UserActivityCard.jfif";
+import DonationQr from "../assets/images/samples/qr_code.png"
 
 export const ApplicationConstants = {
     StraySafeLogo1,
@@ -11,6 +12,7 @@ export const ApplicationConstants = {
     LandingPageImage,
     LandingPageImage_Adopt,
     UserActivityCardImg,
+    DonationQr,
     SampleCardImg,
     ROUTE_LOGIN: "login",
     ROUTE_LANDING: "/",

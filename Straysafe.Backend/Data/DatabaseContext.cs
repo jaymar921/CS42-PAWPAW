@@ -25,7 +25,9 @@ namespace Straysafe.Backend.Data
                         Id = Guid.NewGuid(),
                         Email = "admin",
                         Password = Hasher.HashSHA512("P@ssw0rd"),
-                        Role = "Admin"
+                        Role = "Admin",
+                        FirstName = "System",
+                        LastName = "Administrator",
                     }
                 ]
             );
