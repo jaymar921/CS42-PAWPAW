@@ -72,4 +72,5 @@ export const API_LINKS = {
     ANNOUNCEMENT_ADD_URL: APIUrl + "/announcement/add",
     ANNOUNCEMENT_DELETE_URL: (id)=> APIUrl + `/announcement/delete?announcementId=${id}`,
     ANNOUNCEMENT_UPDATE_URL: APIUrl + "/announcement/update",
+    NOTIFICATION_GETALL: APIUrl + "/notification/getall",
 }

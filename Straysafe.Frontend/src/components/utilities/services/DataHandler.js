@@ -173,3 +173,13 @@ export const HasFile = async (fileName) => {
     const data = await response.json();
     return data.success;
 }
+
+/**
+ * 
+ * @returns {Promise<Array<Notification>>}
+ */
+export const GetNotifications = async () => {
+    const response = await fetch(API_LINKS.NOTIFICATION_GETALL);
+    const data = await response.json();
+    return data.data;
+}
