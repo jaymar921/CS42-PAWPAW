@@ -49,8 +49,8 @@ export const AuthConstants = {
     ROLE_ADMIN: "Admin"
 }
 
-export const APIUrl = "http://localhost:5077";
-export const ChatHubUrl = "http://localhost:5077/chathub"
+export const APIUrl = "http://localhost:8080";
+export const ChatHubUrl = "http://localhost:8080/chathub"
 
 export const API_LINKS = {
     USER_GET: (id) => APIUrl + `/user/get?id=${id}`,
