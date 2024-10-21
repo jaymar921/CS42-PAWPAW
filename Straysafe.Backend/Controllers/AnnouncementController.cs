@@ -72,7 +72,7 @@ namespace Straysafe.Backend.Controllers
         [HttpGet("getall")]
         public IActionResult GetAllAnnouncement()
         {
-            return Ok(new { Message = "Announcements Retrieved", Data = AnnouncementRepository.GetAll(), Success = true });
+            return Ok(new { Message = "Announcements Retrieved", Data = AnnouncementRepository.GetAll().OrderByDescending(d => d.Date), Success = true });
         }
 
     }

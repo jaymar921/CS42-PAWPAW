@@ -61,9 +61,6 @@ function UserActivitiesDashboard() {
         data = data.filter((d) =>
           CheckDateBetween(df.toISOString(), dt.toISOString(), d.reportDate)
         );
-        console.log(df);
-        console.log(dt);
-        console.log(CreateDateTo());
       }
 
       // add userdata to report
