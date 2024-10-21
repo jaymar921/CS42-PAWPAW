@@ -96,6 +96,8 @@ function VerifyAccountModal({
                   orgName={ug.firstName + " " + ug.lastName}
                   address={ug.address}
                   email={ug.email}
+                  attachmentId={ug.id}
+                  fileName={ug.lastName + "-attachment"}
                   contactNumber={ug.contactNumber}
                   acceptCallback={() => {
                     triggerAction(true, ug);

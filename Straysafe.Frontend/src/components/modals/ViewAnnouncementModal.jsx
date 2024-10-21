@@ -79,7 +79,7 @@ function ViewAnnouncementModal({
           <p className="text-xs mt-2 text-center">
             Reported by:{" "}
             <a className="primary-1 font-bold">
-              {reporter.firstName} {reporter.lastName}
+              {reporter?.firstName} {reporter?.lastName}
             </a>
           </p>
           <p className="text-xs mt-2 text-center">
