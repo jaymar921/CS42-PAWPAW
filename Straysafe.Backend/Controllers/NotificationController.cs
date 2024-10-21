@@ -13,7 +13,7 @@ namespace Straysafe.Backend.Controllers
         [HttpGet("getall")]
         public IActionResult Get()
         {
-            return Ok(new {  Data = _notificationsRepository.GetAll() });
+            return Ok(new {  Data = _notificationsRepository.GetAll().OrderByDescending(d => d.Created) });
         }
     }
 }

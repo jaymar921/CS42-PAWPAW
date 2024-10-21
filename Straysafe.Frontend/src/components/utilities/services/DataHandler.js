@@ -1,6 +1,7 @@
 import { API_LINKS } from "../../../contants/ApplicationConstants"
 import { AnnouncementData } from "../models/AnnouncementData";
 import { ChatData } from "../models/chatUtility/ChatData";
+import Donation from "../models/Donation";
 import { PetData } from "../models/PetData"
 import { UserData } from "../models/UserData";
 
@@ -180,6 +181,17 @@ export const HasFile = async (fileName) => {
  */
 export const GetNotifications = async () => {
     const response = await fetch(API_LINKS.NOTIFICATION_GETALL);
+    const data = await response.json();
+    return data.data;
+}
+
+
+/**
+ * 
+ * @returns {Promise<Array<Donation>>}
+ */
+export const GetDonations = async () => {
+    const response = await fetch(API_LINKS.DONATIONS_GETALL);
     const data = await response.json();
     return data.data;
 }
