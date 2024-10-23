@@ -75,6 +75,15 @@ function Header() {
                       Reports
                     </Button>
                   </div>
+                  <div className="text-center w-auto mx-4">
+                    <Button
+                      onClick={() =>
+                        RedirectTo(ApplicationConstants.ROUTE_DONATION)
+                      }
+                    >
+                      Donate
+                    </Button>
+                  </div>
                 </>
               )}
             {loggedInAccount?.role !== AuthConstants.ROLE_ORGANIZATION && (
