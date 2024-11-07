@@ -14,7 +14,7 @@ export const ApplicationConstants = {
     UserActivityCardImg,
     DonationQr,
     SampleCardImg,
-    ROUTE_LOGIN: "login",
+    ROUTE_LOGIN: "/login",
     ROUTE_LANDING: "/",
     ROUTE_SIGNUP_AS_STRAVER: "/sign-up-as-straver",
     ROUTE_SIGNUP_AS_ORGANIZATION: "/sign-up-as-organization",
