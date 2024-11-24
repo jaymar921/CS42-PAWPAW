@@ -10,7 +10,9 @@ import { AuthConstants } from "../../../contants/ApplicationConstants";
 function UsersDashboard() {
   const [showVerifyAccountModal, setShowVerifyAccountModal] = useState(false);
   const [userData, setUserData] = useState([]);
+  const [functionRemoveAcc, setFunctionRemoveAcc] = useState([]);
   const [unverifiedOrganizations, setUnverifiedOrganizations] = useState([]);
+  const [excemptedFunction, setExcemptedFunction] = useState([]);
 
   useEffect(() => {
     RefreshRows();
@@ -24,7 +26,10 @@ function UsersDashboard() {
     const accountRepo = new AccountRepository();
     const accounts = await accountRepo.GetAccounts();
     const dataRow = [];
+    const removeFunctions = [];
+    const excemptedFunction = [];
 
+    let index = 0;
     for (const account of accounts) {
       dataRow.push([
         account.role,
@@ -33,6 +38,24 @@ function UsersDashboard() {
         account.contactNumber,
         account.address,
       ]);
+      if (account.role.toLowerCase() === "admin") excemptedFunction.push(index);
+
+      removeFunctions.push(() => {
+        if (account.role.toLowerCase() === "admin") return;
+
+        const confirm_delete = confirm(
+          `Are you sure you want to remove ${account.firstName}?`
+        );
+
+        if (!confirm_delete) return;
+
+        const acc = new AccountRepository();
+        acc.DeleteAccount(account.id);
+        alert(`${account.firstName}'s account was removed`);
+        RefreshRows();
+      });
+
+      index++;
     }
 
     setUnverifiedOrganizations(
@@ -42,6 +65,8 @@ function UsersDashboard() {
     );
 
     setUserData(dataRow);
+    setFunctionRemoveAcc(removeFunctions);
+    setExcemptedFunction(excemptedFunction);
   };
 
   return (
@@ -86,7 +111,9 @@ function UsersDashboard() {
             "Address",
           ]}
           TableRows={[...userData]}
-          OnClickActions={null}
+          OnClickActions={[...functionRemoveAcc]}
+          actionIcon="fa-solid fa-trash text-red-500"
+          ActionExcemptedIndex={[...excemptedFunction]}
         />
       </PageContainer>
     </div>

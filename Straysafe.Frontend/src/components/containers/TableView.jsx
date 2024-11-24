@@ -11,6 +11,7 @@ function TableView({
   className = "w-100 my-8",
   rowClassName = "odd:bg-gray-100 even:bg-white",
   headerClassName = "",
+  ActionExcemptedIndex = [],
 }) {
   return (
     <div className={`${className}`}>
@@ -30,7 +31,7 @@ function TableView({
                 {rowColumn.map((rowData, index) => {
                   return <td key={`${index}${Math.random()}`}>{rowData}</td>;
                 })}
-                {OnClickActions && (
+                {OnClickActions && !ActionExcemptedIndex.includes(index) && (
                   <td>
                     <Button
                       icon={actionIcon}
