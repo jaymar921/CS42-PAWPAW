@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import { RedirectTo } from "../../../components/utilities/PageUtils";
 import {
   API_LINKS,
@@ -12,12 +12,33 @@ import {
 } from "../../../components/utilities/services/DataHandler";
 import { GetProfileInformation } from "../../../components/utilities/services/AuthenticationHandler";
 import { useSearchParams } from "react-router-dom";
+import OrgUpdateReportModal from "../../../components/modals/OrgUpdateReportModal";
+import { AccountRepository } from "../../../components/utilities/services/repositories/AccountRepository";
 
 function InformationReportView({ data }) {
   const [searchParams, setSearchParams] = useSearchParams();
+  const [showUpdateModal, setShowUpdateModal] = useState(false);
+  const [ownerInformation, setOwnerInformation] = useState(null);
+
   useEffect(() => {
     if (data === null || data === undefined)
       RedirectTo(ApplicationConstants.ROUTE_ORG_REPORTS);
+  }, [data]);
+
+  useEffect(() => {
+    const setOwnerInfo = async () => {
+      const aR = new AccountRepository();
+      const accounts = await aR.GetAccounts();
+
+      for (let account of accounts) {
+        if (account.firstName + " " + account.lastName === data.owner) {
+          setOwnerInformation(account);
+          console.log(account);
+          break;
+        }
+      }
+    };
+    if (data.owner !== "") setOwnerInfo();
   }, [data]);
 
   const getView = () => {
@@ -28,6 +49,10 @@ function InformationReportView({ data }) {
   };
 
   const handleUpdate = async (status) => {
+    if (status.toLowerCase() === "adopted" && data.owner === "") {
+      alert("Please update the owner before setting the status to 'Adopted'");
+      return;
+    }
     let confirmation =
       status.toLowerCase() !== "adopted"
         ? confirm(`Confirm change status to ${status}?`)
@@ -59,6 +84,14 @@ function InformationReportView({ data }) {
   };
   return (
     <PageContainer className="p-4 col-span-2">
+      {showUpdateModal && (
+        <OrgUpdateReportModal
+          petData={data}
+          onClose={() => {
+            setShowUpdateModal(false);
+          }}
+        />
+      )}
       <h1 className="text-xl font-bold primary-1">
         <Button
           icon="fa-solid fa-arrow-left text-black"
@@ -202,69 +235,133 @@ function InformationReportView({ data }) {
               </div>
             </div>
 
-            {data.status !== "Adopted" && (
+            {!getView().includes("history") && (
               <>
                 <div className="w-full px-8 mt-5">
-                  <h1 className="primary-1 font-bold text-lg">Change Status</h1>
+                  <h1 className="primary-1 font-bold text-lg">
+                    Update Information
+                  </h1>
                 </div>
                 <div className="w-full px-8">
-                  {data.status !== "Rescued" &&
-                    data.status !== "Unlocated" &&
-                    data.status !== "Posted" && (
-                      <>
-                        <Button
-                          className="w-full my-2"
-                          onClick={() => handleUpdate("Rescued")}
-                        >
-                          Rescued
-                        </Button>
-                        <Button
-                          className="w-full my-2"
-                          onClick={() => handleUpdate("Unlocated")}
-                        >
-                          Failed to Locate
-                        </Button>
-                      </>
-                    )}
-                  {data.status !== "Posted" &&
-                    (data.status === "Rescued" ||
-                      data.status === "Unlocated") && (
-                      <>
-                        <Button
-                          className="w-full my-2"
-                          onClick={() => handleUpdate("Posted")}
-                        >
-                          Post to Adoption
-                        </Button>
-                      </>
-                    )}
+                  {" "}
+                  <Button
+                    className="w-full my-2"
+                    onClick={() => {
+                      setShowUpdateModal(true);
+                    }}
+                  >
+                    Modify
+                  </Button>
+                </div>
 
-                  {data.status === "Posted" && (
+                {data.status !== "Adopted" && (
+                  <>
+                    <div className="w-full px-8 mt-5">
+                      <h1 className="primary-1 font-bold text-lg">
+                        Change Status
+                      </h1>
+                    </div>
+                    <div className="w-full px-8">
+                      {data.status !== "Rescued" &&
+                        data.status !== "Unlocated" &&
+                        data.status !== "Posted" && (
+                          <>
+                            <Button
+                              className="w-full my-2"
+                              onClick={() => handleUpdate("Rescued")}
+                            >
+                              Rescued
+                            </Button>
+                            <Button
+                              className="w-full my-2"
+                              onClick={() => handleUpdate("Unlocated")}
+                            >
+                              Failed to Locate
+                            </Button>
+                          </>
+                        )}
+                      {data.status !== "Posted" &&
+                        (data.status === "Rescued" ||
+                          data.status === "Unlocated") && (
+                          <>
+                            <Button
+                              className="w-full my-2"
+                              onClick={() => handleUpdate("Posted")}
+                            >
+                              Post to Adoption
+                            </Button>
+                          </>
+                        )}
+
+                      {data.status === "Posted" && (
+                        <Button
+                          className="w-full my-2 bg-green-500"
+                          onClick={() => handleUpdate("Adopted")}
+                        >
+                          Adopted
+                        </Button>
+                      )}
+                    </div>
+                  </>
+                )}
+
+                <div className="w-full px-8 mt-5">
+                  <h1 className="primary-1 font-bold text-lg">
+                    Other Action{" "}
+                    <i className="fa-solid fa-warning text-orange-500"></i>
+                  </h1>
+                  <div className="w-full px-8">
                     <Button
-                      className="w-full my-2 bg-green-500"
-                      onClick={() => handleUpdate("Adopted")}
+                      className="w-full my-2 bg-red-500"
+                      onClick={handleRemoveReport}
                     >
-                      Adopted
+                      Remove
                     </Button>
-                  )}
+                  </div>
                 </div>
               </>
             )}
 
-            <div className="w-full px-8 mt-5">
-              <h1 className="primary-1 font-bold text-lg">
-                Other Action{" "}
-                <i className="fa-solid fa-warning text-orange-500"></i>
-              </h1>
-              <div className="w-full px-8">
-                <Button
-                  className="w-full my-2 bg-red-500"
-                  onClick={handleRemoveReport}
-                >
-                  Remove
-                </Button>
-              </div>
-            </div>
+            {getView().includes("history") && ownerInformation && (
+              <>
+                <div className="w-full px-8 mt-5">
+                  <h1 className="primary-1 font-bold text-lg">
+                    Owner Information
+                  </h1>
+                </div>
+                <div className="grid grid-cols-3 my-2">
+                  <div className="col-span-1 items-center flex w-full text-xs">
+                    <label className="text-right w-full pr-4 primary-1">
+                      Name:
+                    </label>
+                  </div>
+                  <div className="col-span-2 text-center items-center flex w-full texsmt-">
+                    {ownerInformation?.firstName} {ownerInformation?.lastName}
+                  </div>
+                </div>
+                <div className="grid grid-cols-3 my-2">
+                  <div className="col-span-1 items-center flex w-full text-xs">
+                    <label className="text-right w-full pr-4 primary-1">
+                      Contact Information:
+                    </label>
+                  </div>
+                  <div className="col-span-2 text-center items-center flex w-full texsmt-">
+                    {ownerInformation?.email} ({ownerInformation?.contactNumber}
+                    )
+                  </div>
+                </div>
+                <div className="grid grid-cols-3 my-2">
+                  <div className="col-span-1 items-center flex w-full text-xs">
+                    <label className="text-right w-full pr-4 primary-1">
+                      Address:
+                    </label>
+                  </div>
+                  <div className="col-span-2 text-center items-center flex w-full texsmt-">
+                    {ownerInformation?.address}
+                  </div>
+                </div>
+              </>
+            )}
           </div>
         </div>
       </div>

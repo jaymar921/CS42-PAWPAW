@@ -69,7 +69,7 @@ function ViewAnnouncementModal({
   }, [announcementData]);
   return (
     <div
-      className={`sticky top-0 left-0 w-[100%] h-screen ${
+      className={`absolute top-0 left-0 w-[100%] h-screen ${
         !removeBlurBg && "bg-[rgba(0,0,0,0.1)]"
       } z-[99999]`}
     >

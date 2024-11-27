@@ -8,8 +8,9 @@ function SelectInput({
   containerClassname,
   options = [],
   selectedOption,
+  setValue = "",
 }) {
-  const [val, setVal] = useState(placeholder);
+  const [val, setVal] = useState(setValue);
   let defaultStyle = `${className} px-6 py-2 bg-white border shadow-sm border-[#1794A1] placeholder-[#1794A1] focus:outline-none focus:border-sky-500 focus:ring-sky-500 block w-full rounded-md sm:text-sm`;
 
   return (

@@ -8,6 +8,7 @@ import FoundView from "./views/FoundView";
 import LostView from "./views/LostView";
 import PostedView from "./views/PostedView";
 import { useParams, useSearchParams } from "react-router-dom";
+import HistoryView from "./views/HistoryView";
 
 function View({ view, data, setView, setData }) {
   if (view === "stray")
@@ -18,11 +19,13 @@ function View({ view, data, setView, setData }) {
   if (view === "lost") return <LostView setView={setView} setData={setData} />;
   if (view === "posted")
     return <PostedView setView={setView} setData={setData} />;
+  if (view === "history")
+    return <HistoryView setView={setView} setData={setData} />;
   return <></>;
 }
 
-function btnActive(name, view) {
-  if (view === name)
+function btnActive(name, view, param = "") {
+  if (view === name || param === name)
     return "w-full text-white bg-primary-1 border-[1px] rounded-lg font-bold";
   return "w-full bg-white border-[#1794A1] border-[1px] rounded-lg font-bold";
 }
@@ -40,9 +43,11 @@ function ReportsPage() {
             <h1 className="text-left primary-1 text-[30px]">Reports</h1>
             <div className="w-[80%] text-center my-2">
               <Button
-                className={btnActive("stray", view)}
+                className={btnActive("stray", view, searchParams.get("v"))}
                 onClick={() => {
                   setView("stray");
+                  searchParams.set("v", "stray");
+                  setSearchParams(searchParams);
                 }}
                 default
               >
@@ -51,9 +56,11 @@ function ReportsPage() {
             </div>
             <div className="w-[80%] text-center my-2 text-black">
               <Button
-                className={btnActive("lost", view)}
+                className={btnActive("lost", view, searchParams.get("v"))}
                 onClick={() => {
                   setView("lost");
+                  searchParams.set("v", "lost");
+                  setSearchParams(searchParams);
                 }}
                 default
               >
@@ -62,9 +69,11 @@ function ReportsPage() {
             </div>
             <div className="w-[80%] text-center my-2 text-black">
               <Button
-                className={btnActive("found", view)}
+                className={btnActive("found", view, searchParams.get("v"))}
                 onClick={() => {
                   setView("found");
+                  searchParams.set("v", "found");
+                  setSearchParams(searchParams);
                 }}
                 default
               >
@@ -73,13 +82,28 @@ function ReportsPage() {
             </div>
             <div className="w-[80%] text-center my-2 text-black">
               <Button
-                className={btnActive("posted", view)}
+                className={btnActive("posted", view, searchParams.get("v"))}
                 onClick={() => {
                   setView("posted");
+                  searchParams.set("v", "posted");
+                  setSearchParams(searchParams);
                 }}
                 default
               >
-                Posted and Adopted Pets
+                Posted to Adoption
+              </Button>
+            </div>
+            <div className="w-[80%] text-center my-2 text-black">
+              <Button
+                className={btnActive("history", view, searchParams.get("v"))}
+                onClick={() => {
+                  setView("history");
+                  searchParams.set("v", "history");
+                  setSearchParams(searchParams);
+                }}
+                default
+              >
+                History
               </Button>
             </div>
           </div>

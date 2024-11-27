@@ -5,8 +5,9 @@ import {
   RetrieveSingleAccount,
 } from "../../../components/utilities/services/DataHandler";
 import { useSearchParams } from "react-router-dom";
+import { AccountRepository } from "../../../components/utilities/services/repositories/AccountRepository";
 
-function PostedView({ setView, setData }) {
+function HistoryView({ setView, setData }) {
   const [reports, setReport] = useState([]);
   const [actions, setActions] = useState([]);
   const [searchParams, setSearchParams] = useSearchParams();
@@ -28,21 +29,22 @@ function PostedView({ setView, setData }) {
         /*
             Only filter stray pets and or with a status of posted
         */
-        if (report.status.toLowerCase() !== "posted") continue;
+        if (report.status.toLowerCase() !== "adopted") continue;
         var reporterId = report.reporter;
         var reporterDetails = await RetrieveSingleAccount(reporterId);
         var organizationDetails =
           report.organization &&
           (await RetrieveSingleAccount(report.organization));
 
+        const aR = new AccountRepository();
+        const acs = await aR.GetAccounts();
+
         report.reporterDetails = reporterDetails;
         report.organizationDetails = organizationDetails;
 
         reportData.push([
-          `${reporterDetails.firstName} ${reporterDetails.lastName}`,
+          `${report.owner}`,
           report.name,
-          report.animalType,
-          report.reportType,
           new Date(report.reportDate).toLocaleString(),
           <p
             key={report.id}
@@ -55,7 +57,7 @@ function PostedView({ setView, setData }) {
         actionData.push(() => {
           setView("info");
           setData(report);
-          searchParams.set("v", "posted");
+          searchParams.set("v", "history");
           setSearchParams(searchParams);
         });
       }
@@ -68,16 +70,9 @@ function PostedView({ setView, setData }) {
   return (
     <div className="h-full col-span-2">
       <div className="relative left-[50%] translate-x-[-50%] w-[80%] h-[70%]">
-        <h1 className="text-xl font-bold primary-1">View: Posted Pets</h1>
+        <h1 className="text-xl font-bold primary-1">View: Adoption History</h1>
         <TableView
-          TableHeader={[
-            "Reported by",
-            "Name",
-            "Animal Type",
-            "Report Type",
-            "Report Date",
-            "Status",
-          ]}
+          TableHeader={["Owner", "Pet Name", "Report Date", "Status"]}
           TableRows={reports}
           OnClickActions={actions}
           actionChildren="Details"
@@ -88,4 +83,4 @@ function PostedView({ setView, setData }) {
   );
 }
 
-export default PostedView;
+export default HistoryView;
