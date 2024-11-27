@@ -11,7 +11,8 @@ namespace Straysafe.Backend.Common.DAL.Models
         public Guid Id { get; set; } = Guid.NewGuid();
         [Required]
         public Guid UserId { get; set; } = Guid.Empty;
-        public string SpaceSeparatedPreference = string.Empty;
+        [Required]
+        public string SpaceSeparatedPreference { get; set; } = string.Empty;
 
         public IEnumerable<string> GetPreference()
         {

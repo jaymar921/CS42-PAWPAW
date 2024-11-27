@@ -10,10 +10,11 @@ namespace Straysafe.Backend.Controllers
 {
     [ApiController]
     [Route("[controller]")]
-    public class UserController(ILogger<UserController> logger, IRepository<User> repository) : Controller
+    public class UserController(ILogger<UserController> logger, IRepository<User> repository, IRepository<UserPreference> userPreferenceRepository) : Controller
     {
         private readonly ILogger<UserController> _logger = logger;
         private readonly IRepository<User> _repository = repository;
+        private readonly IRepository<UserPreference> _userPreferenceRepository = userPreferenceRepository;
 
         [HttpPost("Register")]
         public async Task<IActionResult> AddUser([FromBody] User user)
@@ -22,7 +23,7 @@ namespace Straysafe.Backend.Controllers
             user.Password = Hasher.HashSHA512(user.Password);
             bool result = await _repository.AddAsync(user);
 
-            if (result) return Ok(new { Message = "User has been Registered", Success = result, user.Id});
+            if (result) return Ok(new { Message = "User has been Registered", Success = result, user.Id });
             return BadRequest(new { Message = "Failed to Register User", Success = result, user.Id });
         }
 
@@ -63,7 +64,7 @@ namespace Straysafe.Backend.Controllers
 
             if (user != null)
             {
-                if(!string.IsNullOrEmpty(updatedUser.FirstName))
+                if (!string.IsNullOrEmpty(updatedUser.FirstName))
                     user.FirstName = updatedUser.FirstName;
                 if (!string.IsNullOrEmpty(updatedUser.LastName))
                     user.LastName = updatedUser.LastName;
@@ -80,7 +81,7 @@ namespace Straysafe.Backend.Controllers
 
                 bool result = await _repository.UpdateAsync(user);
 
-               if(result)
+                if (result)
                 {
                     return Ok(new
                     {
@@ -108,11 +109,11 @@ namespace Straysafe.Backend.Controllers
         [HttpPost("Login")]
         public IActionResult Login([FromBody] UserCredential credential)
         {
-            var user = _repository.GetAll().FirstOrDefault(u => 
+            var user = _repository.GetAll().FirstOrDefault(u =>
             u.Email.ToLower().Equals(credential.Email.ToLower()) && u.Password.Equals(Hasher.HashSHA512(credential.Password)));
 
-            
-            if(user != null)
+
+            if (user != null)
             {
                 return Ok(new
                 {
@@ -130,8 +131,45 @@ namespace Straysafe.Backend.Controllers
                     }
                 });
             }
+
+            return Unauthorized(new { Message = "Invalid Credentials", Data = false });
+        }
+
+        [HttpGet("HasPreference")]
+        public IActionResult HasPreference(string userId)
+        {
+            bool parseStatus = Guid.TryParse(userId, out var parsedUserId);
+
+            if (!parseStatus) return BadRequest(new { Message = "Failed to parse Id to GUID", Success = false });
+
+            return Ok(new { HasPreference = _userPreferenceRepository.GetAll().Where(u => u.UserId == parsedUserId).Any() });
+        }
+
+        [HttpGet("GetPreference")]
+        public IActionResult GetPreference(string userId)
+        {
+            bool parseStatus = Guid.TryParse(userId, out var parsedUserId);
+
+            if (!parseStatus) return BadRequest(new { Message = "Failed to parse Id to GUID", Success = false });
+
+            return Ok(new { Data = _userPreferenceRepository.GetAll().Where(u => u.UserId == parsedUserId).FirstOrDefault() });
+        }
+
+        [HttpPost("SaveOrUpdatePreference")]
+        public async Task<IActionResult> SaveOrUpdatePreference([FromBody] UserPreference userPreference)
+        {
+            // check if it already exists
+            var preference = _userPreferenceRepository.GetAll().Where(u => u.UserId == userPreference.UserId).FirstOrDefault();
+
+            if (preference != null)
+            {
+                preference.SpaceSeparatedPreference = userPreference.SpaceSeparatedPreference;
+                await _userPreferenceRepository.UpdateAsync(preference);
+                return Ok(new { Success = true, Message = "Updated preference"});
+            }
             
-            return Unauthorized(new { Message = "Invalid Credentials", Data = false});
+            await _userPreferenceRepository.AddAsync(userPreference);
+            return Ok(new { Success = true, Message = "Added new preference" });
         }
     }
 }

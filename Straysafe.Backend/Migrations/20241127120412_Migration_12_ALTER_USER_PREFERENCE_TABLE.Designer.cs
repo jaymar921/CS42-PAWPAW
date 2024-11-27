@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Straysafe.Backend.Data;
 
@@ -11,9 +12,11 @@ using Straysafe.Backend.Data;
 namespace Straysafe.Backend.Migrations
 {
     [DbContext(typeof(DatabaseContext))]
-    partial class DatabaseContextModelSnapshot : ModelSnapshot
+    [Migration("20241127120412_Migration_12_ALTER_USER_PREFERENCE_TABLE")]
+    partial class Migration_12_ALTER_USER_PREFERENCE_TABLE
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -295,7 +298,7 @@ namespace Straysafe.Backend.Migrations
                     b.HasData(
                         new
                         {
-                            Id = new Guid("60043fdd-b422-47cc-9f10-3e558d02f7f0"),
+                            Id = new Guid("4519e367-9ef3-4a09-ad59-91783af964a3"),
                             Address = "",
                             ContactNumber = "",
                             Email = "admin",
@@ -312,10 +315,6 @@ namespace Straysafe.Backend.Migrations
                     b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("uniqueidentifier");
-
-                    b.Property<string>("SpaceSeparatedPreference")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
 
                     b.Property<Guid>("UserId")
                         .HasColumnType("uniqueidentifier");
