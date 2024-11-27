@@ -14,6 +14,7 @@ namespace Straysafe.Backend.Data
         public DbSet<AnnouncementMetadata> AnnouncementMetadata { get; set; }
         public DbSet<Donation> Donations { get; set; }
         public DbSet<Notification> Notifications { get; set; }
+        public DbSet<UserPreference> UserPreferences { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
