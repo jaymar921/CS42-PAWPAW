@@ -224,3 +224,39 @@ export const DeleteReport = async (id) => {
     const success = (await response.json()).success;
     return success;
 }
+
+/**
+ * 
+ * @returns {Promise<bool>}
+ */
+export const HasUserPreference = async (userId) => {
+    const response = await fetch(API_LINKS.HAS_PREFERENCE(userId));
+    const data = await response.json();
+    return data.hasPreference;
+}
+
+
+/**
+ * 
+ * @returns {Promise<bool>}
+ */
+export const SaveUserPreference = async ({id = "00000000-0000-0000-0000-000000000000", userId, spaceSeparatedPreference}) => {
+    const content = {
+        method: "POST",
+        headers: { "content-type": "application/json"},
+        body: JSON.stringify({id, userId, spaceSeparatedPreference})
+    }
+    const response = await fetch(API_LINKS.SAVE_OR_UPDATE_PREFERENCE, content);
+    const data = await response.json();
+    return data.success;
+}
+
+/**
+ * 
+ * @returns {Promise<string>} Space Separated User Preference
+ */
+export const GetUserPreference = async (userId) => {
+    const response = await fetch(API_LINKS.GET_PREFERENCE(userId));
+    const data = await response.json();
+    return data.data.spaceSeparatedPreference;
+}

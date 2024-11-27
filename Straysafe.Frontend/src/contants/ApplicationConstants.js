@@ -77,4 +77,7 @@ export const API_LINKS = {
     NOTIFICATION_GETALL: APIUrl + "/notification/getall",
     DONATIONS_GETALL: APIUrl + "/donation/getall",
     DONATIONS_ADD: APIUrl + "/donation/add",
+    HAS_PREFERENCE:  (userId) => APIUrl + `/user/hasPreference?userId=${userId}`,
+    SAVE_OR_UPDATE_PREFERENCE:  APIUrl + `/user/saveOrUpdatePreference`,
+    GET_PREFERENCE:  (userId) => APIUrl + `/user/getPreference?userId=${userId}`,
 }

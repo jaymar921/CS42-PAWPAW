@@ -13,8 +13,12 @@ import {
 import Button from "../components/buttons/Button";
 import { UploadFile } from "../components/utilities/media/UploadFileUtil";
 import Input from "../components/formElements/Input";
-import { RetrieveSingleAccount } from "../components/utilities/services/DataHandler";
+import {
+  GetUserPreference,
+  RetrieveSingleAccount,
+} from "../components/utilities/services/DataHandler";
 import { AccountRepository } from "../components/utilities/services/repositories/AccountRepository";
+import UserPreferenceModal from "../components/modals/UserPreferenceModal";
 
 function ProfilePage() {
   const [editMode, setEditMode] = useState(false);
@@ -30,6 +34,8 @@ function ProfilePage() {
   const [currentPassword, setCurrentPassword] = useState("");
   const [newPassword, setNewPassword] = useState("");
   const [email, setEmail] = useState("");
+  const [showPreferenceModal, setShowPreferenceModal] = useState(false);
+  const [userPreference, setUserPreference] = useState("");
 
   useEffect(() => {
     if (currentLoggedInUser && !loggedInUser) {
@@ -42,6 +48,8 @@ function ProfilePage() {
         setFirstName(user.firstName);
         setLastName(user.lastName);
         setEmail(user.email);
+
+        updateUserPreference();
       })();
     }
   }, [currentLoggedInUser, loggedInUser]);
@@ -83,6 +91,11 @@ function ProfilePage() {
     RedirectTo(ApplicationConstants.ROUTE_PROFILE);
   };
 
+  const updateUserPreference = async () => {
+    const userPreference = await GetUserPreference(GetProfileInformation().id);
+    setUserPreference(userPreference);
+  };
+
   const handleChangePassword = async () => {
     let accRepo = new AccountRepository();
 
@@ -109,6 +122,16 @@ function ProfilePage() {
   return (
     <div>
       <Header />
+      {showPreferenceModal && (
+        <UserPreferenceModal
+          onClose={() => {
+            setShowPreferenceModal(false);
+          }}
+          preferenceValue={userPreference}
+          callBack={updateUserPreference}
+          isUpdate
+        />
+      )}
       <div
         className={`absolute ${
           showSaveModal ? "top-0" : "top-[-200px]"
@@ -304,6 +327,20 @@ function ProfilePage() {
                 onClick={() => setShowChangePasswordModal(true)}
               >
                 Change Password
+              </Button>
+            </div>
+          </div>
+
+          <div className="relative left-[50%] translate-x-[-50%] w-[300px] border-2 bg-gray-200 rounded-lg grid grid-cols-9 p-1 mt-2">
+            <div className="col-span-1 items-center">
+              <i className="fa-solid fa-magnifying-glass text-gray-500"></i>
+            </div>
+            <div className="col-span-8">
+              <Button
+                className="text-xs h-6 p-0 px-3 bg-orange-500"
+                onClick={() => setShowPreferenceModal(true)}
+              >
+                Update Preferences
               </Button>
             </div>
           </div>
