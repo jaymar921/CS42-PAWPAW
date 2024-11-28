@@ -23,7 +23,8 @@ function ChatUser({
       <div className="flex items-center cursor-pointer w-[70%]">
         <div className="overflow-clip w-auto">
           <h1 className="px-2 font-bold text-xl">
-            {displayName} <p className="text-xs text-orange-500">{topic}</p>
+            {displayName}{" "}
+            <p className="text-sm md:text-xl text-orange-500">{topic}</p>
           </h1>
           <p className="px-2 text-gray-500 truncate w-[200px]">{lastMessage}</p>
         </div>
