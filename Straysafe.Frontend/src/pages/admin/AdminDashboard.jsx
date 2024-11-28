@@ -14,6 +14,7 @@ import {
   AuthConstants,
 } from "../../contants/ApplicationConstants";
 import { RedirectTo } from "../../components/utilities/PageUtils";
+import HistoryDashboard from "./subpages/HistoryDashboard";
 
 function DashboardItem({ active }) {
   if (active === "User Activities") {
@@ -24,6 +25,8 @@ function DashboardItem({ active }) {
     return <ReportsDashboard />;
   } else if (active === "Users") {
     return <UsersDashboard />;
+  } else if (active === "History") {
+    return <HistoryDashboard />;
   } else if (active === "Donation") {
     return <DonationsDashboard />;
   } else if (active === "Notifications") {

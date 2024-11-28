@@ -2,7 +2,6 @@ import React, { useCallback, useEffect, useState } from "react";
 import PageContainer from "../../../components/containers/PageContainer";
 import DateRange from "../../../components/formElements/DateRange";
 import SelectInput from "../../../components/formElements/SelectInput";
-import Input from "../../../components/formElements/Input";
 import CardContainer from "../../../components/containers/CardContainer";
 import UserActivityCard from "../../../components/cards/UserActivityCard";
 import { RetrieveReports } from "../../../components/utilities/services/DataHandler";
@@ -30,7 +29,7 @@ function GetTypeColor(type) {
   if (type.toLowerCase().includes("lost")) return "bg-blue-500";
   if (type.toLowerCase().includes("found")) return "bg-yellow-500";
 }
-function UserActivitiesDashboard() {
+function HistoryDashboard() {
   const [dateFrom, setDateFrom] = useState(undefined);
   const [dateTo, setDateTo] = useState(undefined);
   const [animalType, setAnimalType] = useState(undefined);
@@ -41,8 +40,8 @@ function UserActivitiesDashboard() {
   const refreshFn = useCallback(async () => {
     let data = await RetrieveReports();
 
-    // ensure that only not-adopted pets are filtered
-    data = data.filter((d) => !d.status.toLowerCase().includes("adopted"));
+    // ensure that only adopted pets are filtered
+    data = data.filter((d) => d.status.toLowerCase().includes("adopted"));
 
     if (animalType && animalType !== "All") {
       data = data.filter(
@@ -97,7 +96,7 @@ function UserActivitiesDashboard() {
         <PageContainer>
           <div className="grid grid-cols-4 items-center my-8">
             <h3 className="col-span-1 text-[25px] primary-1 font-bold">
-              User Activities
+              Adoption History
             </h3>
             <div />
           </div>
@@ -139,8 +138,12 @@ function UserActivitiesDashboard() {
                       `${report.reporter.firstName} ${report.reporter.lastName}`,
                     ],
                     ["Animal Type", report.animalType],
-                    ["Date Posted", new Date(report.reportDate).toDateString()],
+                    [
+                      "Date Adopted",
+                      new Date(report.reportDate).toDateString(),
+                    ],
                     ["Status", report.status],
+                    ["Owner", report.owner],
                   ]}
                   onClick={() => {
                     setModalData(report);
@@ -155,4 +158,4 @@ function UserActivitiesDashboard() {
   );
 }
 
-export default UserActivitiesDashboard;
+export default HistoryDashboard;

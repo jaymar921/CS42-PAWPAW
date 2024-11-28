@@ -30,6 +30,11 @@ function AdminSidebarNavigation({ setActiveDashboard, activeDashboard }) {
               active={activeDashboard}
             />
             <NavItem
+              itemName="History"
+              callBack={setActiveDashboard}
+              active={activeDashboard}
+            />
+            <NavItem
               itemName="Announcements"
               callBack={setActiveDashboard}
               active={activeDashboard}

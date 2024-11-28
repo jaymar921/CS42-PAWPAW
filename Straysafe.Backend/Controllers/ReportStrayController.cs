@@ -107,7 +107,10 @@ namespace Straysafe.Backend.Controllers
             if (!string.IsNullOrEmpty(report.Metadata))
                 existingReport.Metadata = report.Metadata;
             if (!string.IsNullOrEmpty(report.Owner))
+            {
                 existingReport.Owner = report.Owner;
+                existingReport.ReportDate = DateTime.Now;
+            }
             if (!string.IsNullOrEmpty(report.Organization)){
                 existingReport.Organization = report.Organization;
 
